@@ -1,0 +1,57 @@
+<view class="page">
+  <view class="header">
+    <text class="title">AI识图</text>
+    <view class="close-btn" bindtap="closeModal">
+      <text class="close-icon">×</text>
+    </view>
+  </view>
+
+  <view class="upload-card">
+    <view class="upload-area" bindtap="chooseImage">
+      <image class="upload-icon" src="/images/AI识图.png" mode="aspectFit"></image>
+      <text class="upload-text">点击上传衣服图片</text>
+      <text class="upload-sub">支持相册/拍照，单图识别</text>
+    </view>
+    <button class="upload-btn" bindtap="chooseImage" disabled="{{loading}}">
+      {{loading ? '识别中...' : '上传并识别'}}
+    </button>
+    <text class="status">{{statusText}}</text>
+  </view>
+
+  <canvas canvas-id="analyzeCanvas" class="hidden-canvas"></canvas>
+
+  <view class="preview-card" wx:if="{{tempFilePath}}">
+    <text class="block-title">原图预览</text>
+    <view class="preview-wrap">
+      <image class="preview-image" src="{{tempFilePath}}" mode="aspectFit"></image>
+      <view class="delete-btn" bindtap="deleteImage">
+        <text class="delete-icon">×</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="result-card" wx:if="{{recognitionResult.length > 0}}">
+    <text class="block-title">识别结果</text>
+    <view class="result-list">
+      <view wx:for="{{recognitionResult}}" wx:key="id" class="result-item">
+        <image class="result-image" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="result-main">
+          <text class="result-name">{{item.name}}</text>
+          <view class="tag-row">
+            <text class="tag season">{{item.season}}</text>
+            <text class="tag style">{{item.style}}</text>
+            <text class="tag fit">{{item.fit}}</text>
+          </view>
+          <text class="result-desc">{{item.description}}</text>
+        </view>
+        <view class="mini-remove" bindtap="deleteImage" data-id="{{item.id}}">
+          <text class="mini-remove-icon">×</text>
+        </view>
+        <view class="mini-edit" bindtap="editItem" data-id="{{item.id}}">
+          <text class="mini-edit-text">编辑</text>
+        </view>
+      </view>
+    </view>
+    <button class="save-btn" bindtap="saveAllToCloset">保存到衣橱</button>
+  </view>
+</view>

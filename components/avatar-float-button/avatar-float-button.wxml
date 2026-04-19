@@ -1,0 +1,18 @@
+<view 
+  class="avatar-float-button"
+  style="{{buttonStyle}} width: {{size + 10}}px; height: {{size + 10}}px; z-index: 9999;"
+  bindtouchstart="touchStart"
+  bindtouchmove="touchMove"
+  bindtouchend="touchEnd"
+  bindtap="handleTap">
+  <view class="avatar-container" style="width: {{size}}px; height: {{size}}px;">
+    <image class="avatar-image" src="{{avatarSrc}}" mode="aspectFill"></image>
+    <view class="pulse-effect" style="width: {{size}}px; height: {{size}}px;"></view>
+  </view>
+  
+  <!-- 提示文字 - 仅在触摸时显示 -->
+  <view class="tooltip" wx:if="{{showTooltip}}">
+    <text class="tooltip-text">{{tooltipText}}</text>
+    <view class="tooltip-arrow"></view>
+  </view>
+</view>

@@ -1,0 +1,89 @@
+<view class="container">
+  <view class="header">
+    <view class="header-content">
+      <text class="title">挑选服装</text>
+      <text class="subtitle">多风格单品库，快速找到适合你的搭配</text>
+    </view>
+  </view>
+
+  <view class="stats-row">
+    <view class="stats-pill">
+      <text class="stats-label">总单品</text>
+      <text class="stats-value">{{totalCount}}</text>
+    </view>
+    <view class="stats-pill">
+      <text class="stats-label">当前展示</text>
+      <text class="stats-value">{{filteredCount}}</text>
+    </view>
+  </view>
+
+  <view class="search-section">
+    <view class="search-container">
+      <input class="search-input" value="{{searchKeyword}}" placeholder="搜索名称/风格/季节/分类" bindinput="onSearchInput"/>
+      <image class="search-icon" src="/images/搜索.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="category-section">
+    <scroll-view class="category-scroll" scroll-x="true" enable-flex="true" show-scrollbar="false">
+      <view
+        wx:for="{{categories}}"
+        wx:key="*this"
+        class="category-item {{currentCategory === item ? 'active' : ''}}"
+        data-category="{{item}}"
+        bindtap="onCategoryChange"
+      >{{item}}</view>
+    </scroll-view>
+  </view>
+
+  <view class="clothes-container">
+    <view wx:if="{{clothesList.length === 0}}" class="empty-state">
+      <image class="empty-icon" src="/images/挑选服装.png" mode="aspectFit"></image>
+      <text class="empty-title">没有匹配结果</text>
+      <text class="empty-subtitle">换个关键词或分类试试</text>
+      <button class="add-btn" bindtap="navigateToUpload">添加服装</button>
+    </view>
+
+    <view wx:else class="clothes-grid">
+      <view wx:for="{{clothesList}}" wx:key="id" class="clothes-card">
+        <image
+          class="clothes-image"
+          src="{{item.image}}"
+          mode="aspectFill"
+          bindtap="previewImage"
+          data-src="{{item.image}}"
+        ></image>
+        <view class="price-badge">¥{{item.price}}</view>
+        <button class="collect-btn {{item.isCollected ? 'collected' : ''}}" catchtap="onCollectTap" data-id="{{item.id}}">
+          <image src="/images/收藏.png" mode="aspectFit"></image>
+        </button>
+        <button wx:if="{{removeMode}}" class="remove-btn" catchtap="onRemoveTap" data-id="{{item.id}}">
+          <image src="/images/delete.png" mode="aspectFit"></image>
+        </button>
+        <view class="clothes-info">
+          <text class="clothes-name">{{item.name}}</text>
+          <text class="clothes-category">{{item.category}}</text>
+          <view class="clothes-tags">
+            <text class="tag season-tag">{{item.season}}</text>
+            <text class="tag style-tag">{{item.style}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="remove-fab {{removeMode ? 'active' : ''}}" bindtap="toggleRemoveMode">
+    <image src="/images/delete.png" mode="aspectFit"></image>
+  </view>
+
+  <view class="bottom-actions">
+    <button class="action-btn secondary" bindtap="goBackHome">
+      <image src="/images/首页.png" mode="aspectFit"></image>
+      <text>返回首页</text>
+    </button>
+    <button class="action-btn primary" bindtap="navigateToUpload">
+      <image src="/images/拍照.png" mode="aspectFit"></image>
+      <text>添加服装</text>
+    </button>
+  </view>
+</view>

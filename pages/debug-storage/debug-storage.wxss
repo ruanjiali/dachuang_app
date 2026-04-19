@@ -1,0 +1,138 @@
+/* pages/debug-storage/debug-storage.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx 0;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.btn {
+  padding: 20rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background-color: #07c160;
+}
+
+.btn.danger {
+  background-color: #fa5151;
+}
+
+.btn.warning {
+  background-color: #ff976a;
+}
+
+.section {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.storage-info {
+  background-color: #f5f5f5;
+  padding: 20rpx;
+  border-radius: 5rpx;
+  font-family: monospace;
+  font-size: 24rpx;
+  white-space: pre-wrap;
+  max-height: 300rpx;
+  overflow-y: auto;
+}
+
+.clothes-list {
+  max-height: 500rpx;
+  overflow-y: auto;
+}
+
+.empty-state {
+  text-align: center;
+  color: #999;
+  padding: 40rpx;
+}
+
+.clothes-item {
+  background-color: #f9f9f9;
+  padding: 15rpx;
+  border-radius: 5rpx;
+  margin-bottom: 10rpx;
+  border-left: 4rpx solid #07c160;
+}
+
+.clothes-id {
+  display: block;
+  font-size: 22rpx;
+  color: #666;
+}
+
+.clothes-name {
+  display: block;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin: 5rpx 0;
+}
+
+.clothes-image {
+  display: block;
+  font-size: 22rpx;
+  color: #07c160;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.clothes-problem {
+  margin-top: 5rpx;
+  padding: 5rpx;
+  background-color: #ffebeb;
+  border-radius: 3rpx;
+}
+
+.clothes-problem text {
+  font-size: 20rpx;
+  color: #fa5151;
+}

@@ -1,0 +1,205 @@
+<view class="container">
+  <!-- 背景装饰元素：标签成对 -->
+  <view class="bg-decoration">
+    <view class="floating-circle circle-1"></view>
+    <view class="floating-circle circle-2"></view>
+    <view class="floating-circle circle-3"></view>
+    <view class="floating-dots dots-1"></view>
+    <view class="floating-dots dots-2"></view>
+  </view>
+
+  <!-- 功能卡片模板定义（复用未登录和已登录的功能区域） -->
+  <template name="function-card-1"><view class="function-card" bindtap="goToFashionAdvice"><view class="card-icon-wrapper"><image class="function-icon" src="/images/穿搭.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">穿搭建议</text></view></template>
+  <template name="function-card-2"><view class="function-card" bindtap="goToPhotoTry"><view class="card-icon-wrapper"><image class="function-icon" src="/images/拍照.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">随手拍</text></view></template>
+  <template name="function-card-3"><view class="function-card" bindtap="goToVirtualTry"><view class="card-icon-wrapper"><image class="function-icon" src="/images/虚拟换衣.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">虚拟换衣</text></view></template>
+  <template name="function-card-4"><view class="function-card" bindtap="goToClothesSelection"><view class="card-icon-wrapper"><image class="function-icon" src="/images/挑选服装.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">挑选服装</text></view></template>
+  <template name="function-card-5"><view class="function-card" bindtap="goToCutout"><view class="card-icon-wrapper"><image class="function-icon" src="/images/抠图.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">智能抠图</text></view></template>
+  <template name="function-card-6"><view class="function-card" bindtap="goToAiRecognition"><view class="card-icon-wrapper"><image class="function-icon" src="/images/AI识图.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">AI识图</text></view></template>
+  <template name="function-card-7"><view class="function-card" bindtap="goToOther"><view class="card-icon-wrapper"><image class="function-icon" src="/images/关于我们.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">更多功能</text></view></template>
+  <template name="function-card-8"><view class="function-card" bindtap="goToOutfitShowcase"><view class="card-icon-wrapper"><image class="function-icon" src="/images/穿搭.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">我的搭配</text></view></template>
+  <template name="function-card-9"><view class="function-card" bindtap="goToChatWithModel"><view class="card-icon-wrapper"><image class="function-icon" src="/images/AI助手.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">AI助手</text></view></template>
+  <template name="function-card-10"><view class="function-card" bindtap="goToClothesAdvisor"><view class="card-icon-wrapper"><image class="function-icon" src="/images/时尚穿搭.png" mode="aspectFit" /><view class="icon-bg"></view></view><text class="card-name">穿搭顾问</text></view></template>
+
+  <!-- 功能卡片区域模板（可复用） -->
+  <template name="function-grid">
+    <view class="function-area">
+      <view class="function-grid">
+        <template is="function-card-1" />
+        <template is="function-card-2" />
+        <template is="function-card-3" />
+        <template is="function-card-4" />
+        <template is="function-card-5" />
+        <template is="function-card-6" />
+        <template is="function-card-7" />
+        <template is="function-card-8" />
+        <template is="function-card-9" />
+        <template is="function-card-10" />
+      </view>
+    </view>
+  </template>
+
+  <!-- 内容区域：核心容器，所有登录/未登录内容都在这里 -->
+  <view class="content">
+    <!-- 1. 未登录状态 -->
+    <view wx:if="{{!isLogin}}" class="login-container">
+      <!-- 未登录-主标题 -->
+      <view class="main-title-section">
+        <view class="title-container">
+          <text class="main-title">AI智能穿搭魔法师</text>
+          <text class="sub-title">AI Intelligent Dressing Wizard</text>
+        </view>
+      </view>
+
+      <!-- 未登录-特色卡片 -->
+      <view class="featured-card-section">
+        <view class="fancy-card" bindtap="goToVirtualTry">
+          <view class="fancy-card-content">
+            <text class="fancy-card-title">虚拟换衣体验</text>
+            <text class="fancy-card-para">探索AI驱动的智能穿搭体验</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 未登录-功能区域（使用模板复用） -->
+      <template is="function-grid" />
+
+      <!-- 未登录-登录注册按钮 -->
+      <view class="login-section" style="position: fixed; left: 0; right: 0; bottom: 200rpx; display: flex; justify-content: center; z-index: 999;">
+        <button class="login-btn" bindtap="goToLogin" style="width: 280rpx; height: 90rpx; z-index: 999; margin: 0 20rpx;">
+          <view class="btn-content">
+            <text>立即登录</text>
+            <view class="btn-arrow">→</view>
+          </view>
+          <view class="btn-glow"></view>
+        </button>
+        <button class="register-btn" bindtap="goToRegister" style="width: 280rpx; height: 90rpx; z-index: 999; margin: 0 20rpx;">
+          <view class="btn-content">
+            <text>免费注册</text>
+            <view class="btn-arrow">→</view>
+          </view>
+          <view class="btn-glow"></view>
+        </button>
+      </view> <!-- 闭合login-section -->
+    </view> <!-- 闭合未登录容器login-container -->
+
+    <!-- 2. 已登录状态 -->
+    <view wx:else>
+      <!-- 已登录-主标题 -->
+      <view class="main-title-section">
+        <view class="title-container">
+          <text class="main-title">AI智能穿搭魔法师</text>
+          <text class="sub-title">AI Intelligent Dressing Wizard</text>
+        </view>
+      </view> <!-- 闭合main-title-section -->
+
+      <!-- 已登录-头部区域（用户信息） -->
+      <view class="header-area">
+        <view class="header-bg">
+          <view class="header-pattern"></view>
+        </view>
+        <view class="header-content" style="height: 195rpx; display: block; box-sizing: border-box; left: 0rpx; top: 0rpx">
+          <view class="header-top">
+            <view class="user-avatar">
+              <image src="/images/用户.png" mode="aspectFit" class="avatar-icon"/>
+            </view>
+            <button class="logout-btn" bindtap="logout" style="position: relative; left: -18rpx; top: -17rpx">
+              <image class="logout-icon" src="/images/退出登录.png" mode="aspectFit" style="width: 32rpx; height: 32rpx; margin-right: 8rpx;" />
+              <text class="logout-text">退出</text>
+            </button>
+          </view>
+
+          <view class="welcome-section-logged">
+            <view class="welcome-greeting">
+              <text class="greeting-text" style="position: relative; left: 30rpx; top: -27rpx">{{greeting}}，{{username || '时尚达人'}}！</text>
+              <text class="greeting-emoji">✨</text>
+            </view>
+            <view class="welcome-message" style="position: relative; left: 0rpx; top: -27rpx">快来体验AI穿搭魔法师吧！</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 已登录-轮播图区域 -->
+      <view class="swiper-section" style="margin: 10rpx 0 30rpx 0; padding: 0 30rpx;">
+        <view class="section-title">
+          <text class="title-text">潮流精选</text>
+          <text class="title-desc">发现最新时尚单品</text>
+        </view>
+        <view class="swiper-container">
+          <swiper
+            indicator-dots="{{swiperConfig.indicatorDots}}"
+            autoplay="{{swiperConfig.autoplay}}"
+            interval="{{swiperConfig.interval}}"
+            duration="{{swiperConfig.duration}}"
+            circular="{{swiperConfig.circular}}"
+            previous-margin="{{swiperConfig.previousMargin}}"
+            next-margin="{{swiperConfig.nextMargin}}"
+            class="clothes-swiper"
+          >
+            <block wx:for="{{swiperList}}" wx:key="id">
+              <swiper-item>
+                <view class="swiper-item-wrapper">
+                  <image style="position: relative; left: 33rpx; top: -29rpx; width: 649rpx; height: 522rpx; display: inline-block; box-sizing: border-box"
+                    src="{{item.image}}"
+                    mode="aspectFill"
+                    class="swiper-image"
+                    bindtap="onClothingTap"
+                    data-id="{{item.id}}"
+                  />
+                  <view class="image-overlay">
+                    <view class="clothing-tag">{{item.tag}}</view>
+                  </view>
+                </view>
+              </swiper-item>
+            </block>
+          </swiper>
+        </view>
+      </view>
+
+      <!-- 已登录-功能区域（使用模板复用） -->
+      <template is="function-grid" />
+    </view> <!-- 闭合已登录容器wx:else -->
+  </view> <!-- 闭合核心内容容器content -->
+
+  <!-- 底部导航：标签成对 -->
+  <view class="footer-nav" style="height: 118rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 0rpx">
+    <view class="nav-item active">
+      <view class="nav-icon-wrapper" style="position: relative; left: 1rpx; top: -8rpx">
+        <image class="nav-icon" src="/images/首页.png" mode="aspectFit" />
+        <view class="nav-indicator"></view>
+      </view> <!-- 闭合nav-icon-wrapper -->
+      <text>首页</text>
+    </view> <!-- 闭合active的nav-item -->
+    <view class="nav-item" bindtap="goToCollection">
+      <view class="nav-icon-wrapper">
+        <image class="nav-icon" src="/images/收藏.png" mode="aspectFit" />
+      </view> <!-- 闭合nav-icon-wrapper -->
+      <text>收藏</text>
+    </view> <!-- 闭合收藏nav-item -->
+    <view class="nav-item" bindtap="goToAbout">
+      <view class="nav-icon-wrapper">
+        <image class="nav-icon" src="/images/关于我们.png" mode="aspectFit" />
+      </view> <!-- 闭合nav-icon-wrapper -->
+      <text>关于</text>
+    </view> <!-- 闭合关于nav-item -->
+  </view> <!-- 闭合footer-nav -->
+  <!-- 浮动聊天按钮 -->
+  <chat-float-button 
+    x="650"
+    y="600"
+    size="60"
+    color="#07C160"
+    isLogin="{{isLogin}}"
+  />
+  
+  <!-- 院团头像浮动按钮 -->
+  <avatar-float-button style="position: relative; left: 0rpx; top: 83rpx" 
+    x="300" 
+    y="600" 
+    size="40" 
+    avatar-src="/images/organization-avatar.png"
+    tooltip-text="点击咨询穿搭建议"
+    show-tooltip="true"
+    is-login="{{isLogin}}"
+    bind:click="onAvatarButtonClick"
+  />
+</view> <!-- 闭合根容器container -->

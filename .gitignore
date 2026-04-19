@@ -1,0 +1,5 @@
+utils/config.local.js
+node_modules/
+.DS_Store
+dist/
+backend/.env

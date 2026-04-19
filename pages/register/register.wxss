@@ -1,0 +1,414 @@
+/* 注册页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff6bb5 0%, #6c5ce7 100%);
+  padding: 40rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景装饰元素 */
+.bg-decoration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 6s ease-in-out infinite;
+}
+
+.circle-1 {
+  width: 120rpx;
+  height: 120rpx;
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 80rpx;
+  height: 80rpx;
+  top: 25%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.circle-3 {
+  width: 100rpx;
+  height: 100rpx;
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+.floating-dots {
+  position: absolute;
+  width: 60rpx;
+  height: 60rpx;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.dots-1 {
+  top: 40%;
+  right: 25%;
+  animation-delay: 1s;
+}
+
+.dots-2 {
+  bottom: 20%;
+  right: 10%;
+  animation-delay: 3s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(180deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(180deg); }
+}
+
+/* 头部区域 */
+.header {
+  text-align: center;
+  margin-bottom: 60rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.logo-container {
+  position: relative;
+  margin-bottom: 30rpx;
+}
+
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  margin-bottom: 30rpx;
+  box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160rpx;
+  height: 160rpx;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.header .title {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20rpx;
+  text-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3);
+  letter-spacing: 2rpx;
+}
+
+.header .subtitle {
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 500rpx;
+}
+
+/* 注册表单卡片 */
+.register-card {
+  width: 100%;
+  max-width: 600rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(20rpx);
+  overflow: hidden;
+}
+
+.register-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10rpx;
+  background: linear-gradient(90deg, #ff6bb5, #6c5ce7);
+  border-radius: 30rpx 30rpx 0 0;
+}
+
+.card-header {
+  text-align: center;
+  padding: 50rpx 40rpx 30rpx;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10rpx;
+}
+
+.card-subtitle {
+  font-size: 32rpx;
+  color: var(--text-secondary);
+}
+
+/* 注册表单 */
+.register-form {
+  padding: 40rpx;
+}
+
+.register-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+  background: var(--bg-gradient);
+  border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+}
+
+
+
+/* 输入组 */
+.input-group {
+  margin-bottom: 32rpx;
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.label-icon {
+  width: 35rpx;
+  height: 35rpx;
+  margin-right: 15rpx;
+  filter: grayscale(100%);
+}
+
+.input-label text {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.input-field {
+  width: 100%;
+  padding: 25rpx 30rpx;
+  border: 2rpx solid var(--text-light);
+  border-radius: var(--border-radius);
+  font-size: 32rpx; /* 增加字体大小 */
+  background: white; /* 改为白色背景，提高对比度 */
+  color: #333; /* 明确设置文字颜色 */
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border-color: var(--primary-color);
+  background: white;
+  box-shadow: 0 0 0 8rpx rgba(255, 107, 181, 0.1);
+  transform: translateY(-2rpx);
+}
+
+
+.input-tip {
+  margin-top: 10rpx;
+  padding-left: 15rpx;
+}
+
+.error-text {
+  font-size: 22rpx;
+  color: var(--error-color);
+}
+/* 同意协议 */
+.terms-group {
+  margin-bottom: 32rpx;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  padding: 10rpx 0;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid var(--text-light);
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15rpx;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.checkbox.checked {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.checkbox.checked text {
+  color: white;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.terms-text {
+  color: var(--text-secondary);
+}
+
+.terms-link {
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0 5rpx;
+}
+
+.terms-link:active {
+  color: var(--primary-dark);
+}
+
+/* 注册按钮 */
+.register-btn {
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: linear-gradient(135deg, #ff6bb5 0%, #6c5ce7 100%);
+  color: white;
+  border-radius: 20rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(255, 107, 181, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-btn:not(.disabled):active {
+  transform: translateY(2rpx);
+  box-shadow: var(--shadow-light);
+}
+
+.register-btn.disabled {
+  background: var(--text-light);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 登录链接 */
+.login-link {
+  text-align: center;
+  font-size: 26rpx;
+}
+
+.link-text {
+  color: var(--text-secondary);
+}
+
+.link-btn {
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.link-btn:active {
+  color: var(--primary-dark);
+  transform: scale(0.95);
+}
+
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .container {
+    padding: 40rpx 30rpx;
+  }
+  
+  .register-form {
+    padding: 40rpx 30rpx;
+  }
+  
+  .header .title {
+    font-size: 48rpx;
+  }
+  
+  .verification-row {
+    flex-direction: column;
+    gap: 15rpx;
+  }
+  
+  .send-code-btn {
+    width: 100%;
+  }
+}

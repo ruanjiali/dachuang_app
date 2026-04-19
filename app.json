@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/cutout/cutout",
+    "pages/about/about",
+    "pages/fashion-advice/fashion-advice",
+    "pages/add-clothes/add-clothes",
+    "pages/photo-try/photo-try",
+    "pages/login/login",
+    "pages/forgot-password/forgot-password",
+    "pages/register/register",
+    "pages/other/other",
+    "pages/outfit-showcase/outfit-showcase",
+    "pages/upload-outfit/upload-outfit",
+    "pages/collection/collection",
+    "pages/clothes-selection/clothes-selection",
+    "pages/ai-recognition/ai-recognition",
+    "pages/web-view/web-view",
+    "pages/chat-with-model/chat-with-model",
+    "pages/clothes-advisor/clothes-advisor"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "AI智能穿搭魔法师",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于将抠图结果保存到你的相册"
+    }
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents"
+}

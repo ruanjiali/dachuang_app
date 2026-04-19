@@ -1,0 +1,17 @@
+<!-- web-view.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">{{pageTitle}}</text>
+    <button bindtap="goBack" class="back-btn">返回</button>
+  </view>
+  
+  <!-- 显示web-view组件 -->
+  <view class="web-view-section" wx:if="{{url}}">
+    <web-view src="{{url}}" />
+  </view>
+
+  <view wx:else class="placeholder">
+    <text>未配置可访问的URL。</text>
+    <text>请在 utils/config.local.js 中设置 serverConfig.virtualTryUrl，或从上一页传入 url 参数。</text>
+  </view>
+</view>

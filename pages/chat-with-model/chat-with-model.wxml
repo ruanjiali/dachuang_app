@@ -1,0 +1,77 @@
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="back-button" bindtap="onBackPress">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="title">AI助手</text>
+    <view class="header-right" bindtap="clearHistory">
+      <text class="clear-text">清除</text>
+    </view>
+  </view>
+
+<!-- 聊天内容区域 -->
+<scroll-view 
+  id="scroll-view" 
+  class="chat-scroll-view" 
+  scroll-y 
+  scroll-into-view="{{scrollToMessage}}"
+  bindscrolltoupper="onScrollToUpper"
+>
+  <view id="chat-container" class="chat-container">
+    <!-- 消息列表 -->
+    <block wx:for="{{messages}}" wx:key="id">
+      <view id="message-{{item.id}}">
+      <!-- 机器人消息 -->
+      <view wx:if="{{item.type === 'ai'}}" class="message-wrapper bot">
+        <view class="avatar bot-avatar">
+          <image src="/images/logo.png" mode="aspectFill" style="width: 100%; height: 100%; border-radius: 50%;"/>
+        </view>
+        <view class="message-content bot-message">
+          <text>{{item.content}}</text>
+        </view>
+      </view>
+      
+      <!-- 用户消息 -->
+      <view wx:else class="message-wrapper user">
+        <view class="message-content user-message">
+          <text>{{item.content}}</text>
+        </view>
+        <view class="avatar user-avatar">
+          <text>我</text>
+        </view>
+      </view>
+      </view>
+    </block>
+    
+    <!-- 加载状态 -->
+    <view wx:if="{{isLoading}}" class="loading-wrapper">
+      <view class="loading-indicator">
+        <view class="loading-dot"></view>
+        <view class="loading-dot"></view>
+        <view class="loading-dot"></view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 输入区域 -->
+<view class="input-container">
+  <view class="input-wrapper">
+    <textarea 
+      class="input-textarea" 
+      placeholder="请输入消息..." 
+      value="{{inputText}}" 
+      bindinput="onInputChange" 
+      bindconfirm="sendMessage" 
+      confirm-type="send"
+      auto-height
+      maxlength="500"
+      focus
+    ></textarea>
+  </view>
+  <view class="send-btn" bindtap="sendMessage">
+    <text>发送</text>
+  </view>
+</view>
+</view> <!-- 闭合container -->

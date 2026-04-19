@@ -1,0 +1,353 @@
+page {
+  --primary-color: #ff6bb5;
+  --secondary-color: #6c5ce7;
+  --accent-color: #00cec9;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --bg-gradient: linear-gradient(135deg, #ff75d6 0%, #f8b2db 100%);
+  --shadow-light: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  --shadow-heavy: 0 15rpx 40rpx rgba(0, 0, 0, 0.15);
+  --border-radius: 20rpx;
+  --border-radius-large: 30rpx;
+}
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  padding-bottom: 120rpx;
+}
+
+.header {
+  padding: 80rpx 40rpx 40rpx;
+  background: var(--bg-gradient);
+  border-radius: 0 0 36rpx 36rpx;
+  box-shadow: var(--shadow-heavy);
+}
+
+.header-content {
+  text-align: center;
+}
+
+.header .title {
+  font-size: 46rpx;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16rpx;
+}
+
+.header .subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.stats-row {
+  padding: 24rpx 40rpx 10rpx;
+  display: flex;
+  gap: 16rpx;
+}
+
+.stats-pill {
+  flex: 1;
+  background: #fff;
+  border-radius: 18rpx;
+  padding: 18rpx 20rpx;
+  box-shadow: var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stats-label {
+  color: var(--text-secondary);
+  font-size: 24rpx;
+}
+
+.stats-value {
+  color: var(--primary-color);
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.search-section {
+  padding: 10rpx 40rpx 26rpx;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  height: 80rpx;
+  background: #fff;
+  border-radius: var(--border-radius);
+  padding: 0 84rpx 0 28rpx;
+  font-size: 27rpx;
+  box-shadow: var(--shadow-light);
+  border: 2rpx solid transparent;
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+}
+
+.search-icon {
+  position: absolute;
+  right: 28rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 0.6;
+}
+
+.category-section {
+  padding: 0 40rpx 24rpx;
+}
+
+.category-scroll {
+  white-space: nowrap;
+}
+
+.category-item {
+  display: inline-block;
+  margin-right: 18rpx;
+  padding: 18rpx 28rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  background: #fff;
+  box-shadow: var(--shadow-light);
+}
+
+.category-item.active {
+  color: #fff;
+  background: var(--primary-color);
+}
+
+.clothes-container {
+  padding: 0 40rpx;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+  background: #fff;
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-light);
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 0 auto 28rpx;
+}
+
+.empty-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12rpx;
+}
+
+.empty-subtitle {
+  display: block;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-bottom: 30rpx;
+}
+
+.add-btn {
+  width: 220rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  background: var(--bg-gradient);
+  color: #fff;
+  border-radius: 14rpx;
+  font-size: 26rpx;
+}
+
+.clothes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22rpx;
+}
+
+.clothes-card {
+  background: #fff;
+  border-radius: 22rpx;
+  overflow: hidden;
+  box-shadow: var(--shadow-light);
+  position: relative;
+}
+
+.clothes-image {
+  width: 100%;
+  height: 260rpx;
+}
+
+.price-badge {
+  position: absolute;
+  left: 16rpx;
+  top: 16rpx;
+  background: rgba(0, 0, 0, 0.62);
+  color: #fff;
+  padding: 6rpx 14rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+}
+
+.collect-btn {
+  position: absolute;
+  top: 14rpx;
+  right: 14rpx;
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collect-btn image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.collect-btn.collected {
+  background: var(--primary-color);
+}
+
+.collect-btn.collected image {
+  filter: brightness(0) invert(1);
+}
+
+.remove-btn {
+  position: absolute;
+  right: 14rpx;
+  bottom: 14rpx;
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-btn image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.remove-fab {
+  position: fixed;
+  right: 30rpx;
+  bottom: 150rpx;
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 54rpx;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow-heavy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+}
+
+.remove-fab image {
+  width: 44rpx;
+  height: 44rpx;
+  opacity: 0.85;
+}
+
+.remove-fab.active {
+  background: #ffe9f3;
+}
+
+.remove-fab.active image {
+  opacity: 1;
+}
+
+.clothes-info {
+  padding: 18rpx;
+}
+
+.clothes-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clothes-category {
+  display: block;
+  font-size: 23rpx;
+  color: var(--text-secondary);
+  margin-bottom: 10rpx;
+}
+
+.clothes-tags {
+  display: flex;
+  gap: 8rpx;
+}
+
+.tag {
+  font-size: 20rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 10rpx;
+}
+
+.season-tag {
+  background: rgba(0, 206, 201, 0.14);
+  color: var(--accent-color);
+}
+
+.style-tag {
+  background: rgba(108, 92, 231, 0.12);
+  color: var(--secondary-color);
+}
+
+.bottom-actions {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 -8rpx 30rpx rgba(0, 0, 0, 0.08);
+  padding: 16rpx 40rpx;
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 27rpx;
+}
+
+.action-btn image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.action-btn.secondary {
+  background: #f2f5fb;
+  color: var(--text-primary);
+}
+
+.action-btn.primary {
+  color: #fff;
+  background: var(--bg-gradient);
+}

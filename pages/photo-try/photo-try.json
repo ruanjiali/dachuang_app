@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "随手拍试穿",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#f9f9f9",
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50
+}

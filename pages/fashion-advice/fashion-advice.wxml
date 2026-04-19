@@ -1,0 +1,146 @@
+<view class="page">
+  <!-- 头部区域 -->
+  <view class="hero">
+    <text class="hero-title">AI穿搭建议</text>
+    <text class="hero-subtitle">智能分析，为你量身定制穿搭方案</text>
+  </view>
+
+  <!-- 步骤指示器 -->
+  <view class="step-indicator">
+    <view class="step {{selectedStyle ? 'completed' : 'active'}}">
+      <view class="step-dot">1</view>
+      <text class="step-text">选择风格</text>
+    </view>
+    <view class="step-line {{selectedStyle ? 'active' : ''}}"></view>
+    <view class="step {{selectedScene ? 'completed' : (selectedStyle ? 'active' : '')}}">
+      <view class="step-dot">2</view>
+      <text class="step-text">选择场景</text>
+    </view>
+    <view class="step-line {{selectedScene ? 'active' : ''}}"></view>
+    <view class="step {{adviceResult ? 'completed' : (selectedScene ? 'active' : '')}}">
+      <view class="step-dot">3</view>
+      <text class="step-text">获取建议</text>
+    </view>
+  </view>
+
+  <!-- 当前选择状态 -->
+  <view class="selection-status" wx:if="{{selectedStyle || selectedScene}}">
+    <view class="status-tags">
+      <view class="status-tag style-tag" wx:if="{{selectedStyle}}">{{selectedStyle.name}}</view>
+      <view class="status-tag scene-tag" wx:if="{{selectedScene}}">{{selectedScene.name}}</view>
+    </view>
+  </view>
+
+  <!-- 风格选择区 -->
+  <view class="panel">
+    <view class="section-head">
+      <text class="section-title">选择风格</text>
+      <text class="section-desc">先选你的穿搭偏好</text>
+    </view>
+    <view class="style-grid">
+      <view
+        wx:for="{{fashionStyles}}"
+        wx:key="id"
+        class="style-card {{selectedStyle && selectedStyle.id === item.id ? 'active' : ''}}"
+        bindtap="selectStyle"
+        data-id="{{item.id}}"
+      >
+        <image class="style-image" src="{{item.icon}}" mode="aspectFill"></image>
+        <view class="style-info">
+          <text class="style-name">{{item.name}}</text>
+          <text class="style-desc">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 场景选择区 -->
+  <view class="panel" wx:if="{{selectedStyle}}">
+    <view class="section-head">
+      <text class="section-title">选择场景</text>
+      <text class="section-desc">选一个你要出门的场景</text>
+    </view>
+    <view class="scene-wrap">
+      <view
+        wx:for="{{scenes}}"
+        wx:key="id"
+        class="scene-chip {{selectedScene && selectedScene.id === item.id ? 'active' : ''}}"
+        bindtap="selectScene"
+        data-id="{{item.id}}"
+      >{{item.name}}</view>
+    </view>
+  </view>
+
+  <!-- 生成按钮 -->
+  <view class="action-box" wx:if="{{selectedStyle && selectedScene}}">
+    <button class="submit-btn" bindtap="getFashionAdvice" disabled="{{isLoading}}">
+      <view class="btn-loading" wx:if="{{isLoading}}">
+        <view class="loading-spinner"></view>
+        <text>AI分析中...</text>
+      </view>
+      <text wx:else>生成穿搭建议</text>
+    </button>
+  </view>
+
+  <!-- AI穿搭建议结果 -->
+  <view class="result-card" wx:if="{{adviceResult}}">
+    <!-- 结果头部 -->
+    <view class="result-header">
+      <view class="result-title-wrap">
+        <text class="result-title">{{selectedStyle.name}}</text>
+        <text class="result-separator">+</text>
+        <text class="result-title">{{selectedScene.name}}</text>
+      </view>
+      <text class="result-subtitle">穿搭方案已生成</text>
+    </view>
+
+    <!-- AI建议内容 -->
+    <view class="ai-advice-section">
+      <text class="advice-header-text">穿搭建议</text>
+      <view class="advice-content">
+        <text class="advice-text">{{adviceResult.advice}}</text>
+      </view>
+    </view>
+
+    <!-- 推荐单品 -->
+    <view class="result-block" wx:if="{{adviceResult.items && adviceResult.items.length}}">
+      <text class="block-title">推荐单品</text>
+      <view class="item-list">
+        <view wx:for="{{adviceResult.items}}" wx:key="id" class="item-row">
+          <image class="item-img" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="item-main">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-meta">{{item.category}} · {{item.style}}</text>
+            <text class="item-price">¥{{item.price}}</text>
+          </view>
+          <button class="fav-btn {{item.hasCollected ? 'active' : ''}}" catchtap="toggleCollect" data-item="{{item}}">
+            <image src="/images/收藏.png" mode="aspectFit"></image>
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 搭配小贴士 -->
+    <view class="result-block" wx:if="{{adviceResult.tips && adviceResult.tips.length}}">
+      <text class="block-title">搭配小贴士</text>
+      <view class="tips-list">
+        <view wx:for="{{adviceResult.tips}}" wx:key="index" class="tip-row">
+          <view class="tip-badge">{{index + 1}}</view>
+          <text class="tip-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-actions">
+    <button class="action-btn secondary" bindtap="goBackHome">
+      <image src="/images/首页.png" mode="aspectFit"></image>
+      <text>返回首页</text>
+    </button>
+    <button class="action-btn primary" bindtap="saveAdvice" wx:if="{{adviceResult}}">
+      <image src="/images/收藏.png" mode="aspectFit"></image>
+      <text>保存建议</text>
+    </button>
+  </view>
+</view>

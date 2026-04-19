@@ -1,0 +1,42 @@
+<!-- pages/debug-storage/debug-storage.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">本地存储调试</text>
+    <text class="subtitle">查看和清理本地存储数据</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn primary" bindtap="readStorageData">刷新数据</button>
+    <button class="btn danger" bindtap="clearProblematicItems">清理问题数据</button>
+    <button class="btn warning" bindtap="clearAllStorage">清除所有存储</button>
+  </view>
+
+  <!-- 存储信息 -->
+  <view class="section">
+    <text class="section-title">存储信息</text>
+    <view class="storage-info">
+      <text>{{storageData}}</text>
+    </view>
+  </view>
+
+  <!-- 服装列表 -->
+  <view class="section">
+    <text class="section-title">服装数据</text>
+    <view class="clothes-list">
+      <view wx:if="{{clothesList.length === 0}}" class="empty-state">
+        <text>没有服装数据</text>
+      </view>
+      <view wx:else>
+        <view wx:for="{{clothesList}}" wx:key="id" class="clothes-item">
+          <text class="clothes-id">ID: {{item.id}}</text>
+          <text class="clothes-name">{{item.name}}</text>
+          <text class="clothes-image">{{item.image}}</text>
+          <view class="clothes-problem" wx:if="{{item.image && item.image.includes('服装16')}}">
+            <text>⚠️ 包含问题路径</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

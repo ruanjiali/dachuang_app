@@ -1,0 +1,342 @@
+/* 关于我们页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  padding-bottom: 120rpx;
+}
+
+/* 头部区域 */
+.header {
+  position: relative;
+  padding: 80rpx 40rpx 60rpx;
+  background: var(--bg-gradient);
+  border-radius: 0 0 40rpx 40rpx;
+  box-shadow: var(--shadow-heavy);
+  margin-bottom: 40rpx;
+  overflow: hidden;
+  text-align: center;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+}
+
+.header .logo{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  margin-bottom: 30rpx;
+  box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.header .title {
+    font-size: 48rpx;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 20rpx;
+    text-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+    letter-spacing: 2rpx;
+    display: block;
+    line-height: 1.4;
+  }
+
+  .header .subtitle {
+    font-size: 34rpx;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 20rpx;
+    text-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+    letter-spacing: 2rpx;
+    display: block;
+    line-height: 1.4;
+    margin-top: 10rpx;
+  }
+
+/* 通用区块样式 */
+.section {
+  margin: 40rpx;
+  background: white;
+  border-radius: var(--border-radius-large);
+  padding: 40rpx;
+  box-shadow: var(--shadow-light);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 38rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 15rpx;
+}
+
+.section-subtitle {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* 应用介绍 */
+.app-intro .intro-content {
+  text-align: center;
+}
+
+.intro-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 40rpx;
+  text-align: justify;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30rpx;
+  margin-top: 40rpx;
+}
+
+.feature-item {
+  text-align: center;
+  padding: 30rpx 20rpx;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.feature-item:active {
+  transform: translateY(-4rpx);
+  box-shadow: var(--shadow-medium);
+}
+
+.feature-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin: 0 auto 20rpx;
+  filter: grayscale(100%);
+  transition: var(--transition);
+}
+
+.feature-item:active .feature-icon {
+  filter: grayscale(0%);
+  transform: scale(1.1);
+}
+
+.feature-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10rpx;
+}
+
+
+/* 核心功能 */
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.feature-card {
+  padding: 30rpx;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  border-left: 6rpx solid var(--primary-color);
+  transition: var(--transition);
+}
+
+.feature-card:active {
+  transform: translateX(8rpx);
+  box-shadow: var(--shadow-medium);
+}
+
+.feature-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.feature-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+  filter: grayscale(100%);
+  transition: var(--transition);
+}
+
+.feature-card:active .feature-icon {
+  filter: grayscale(0%);
+  transform: scale(1.1);
+}
+
+.feature-info {
+  flex: 1;
+}
+
+.feature-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8rpx;
+}
+
+.feature-subtitle {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.feature-description {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* 技术优势 */
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30rpx;
+}
+
+.advantage-item {
+  text-align: center;
+  padding: 30rpx 20rpx;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.advantage-item:active {
+  transform: translateY(-4rpx);
+  box-shadow: var(--shadow-medium);
+}
+
+.advantage-icon {
+  font-size: 48rpx;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.advantage-title {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 15rpx;
+}
+
+.advantage-desc {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.bottom-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20rpx 40rpx;
+  background: white;
+  box-shadow: 0 -8rpx 30rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 20rpx;
+  z-index: 100;
+}
+
+.action-btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: var(--border-radius);
+  font-size: 28rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  transition: var(--transition);
+  border: none;
+}
+
+.action-btn.secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2rpx solid var(--text-light);
+}
+
+.action-btn.primary {
+  background: var(--bg-gradient);
+  color: white;
+  box-shadow: var(--shadow-medium);
+}
+
+.action-btn:active {
+  transform: translateY(2rpx);
+}
+
+.action-btn image {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.action-btn.secondary image {
+  filter: grayscale(100%);
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .section {
+    margin: 20rpx;
+    padding: 30rpx;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20rpx;
+  }
+  
+  .advantages-grid {
+    grid-template-columns: 1fr;
+    gap: 20rpx;
+  }
+  
+  .header {
+    padding: 60rpx 30rpx 40rpx;
+  }
+  
+  .header .title {
+    font-size: 40rpx;
+  }
+  
+  .bottom-actions {
+    padding: 15rpx 30rpx;
+  }
+}

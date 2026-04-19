@@ -1,0 +1,106 @@
+<view class="container">
+  <view class="header">
+    <view class="header-content">
+      <text class="title">我的收藏</text>
+      <text class="subtitle">管理你喜欢的服装和穿搭建议</text>
+    </view>
+  </view>
+
+  <view class="stats-section">
+    <view class="stats-card">
+      <view class="stats-item">
+        <text class="stats-number">{{clothesCount}}</text>
+        <text class="stats-label">服装收藏</text>
+      </view>
+      <view class="stats-divider"></view>
+      <view class="stats-item">
+        <text class="stats-number">{{adviceCount}}</text>
+        <text class="stats-label">建议收藏</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="collection-content">
+    <view class="tab-container">
+      <view class="tab-item {{activeTab === 'clothes' ? 'active' : ''}}" bindtap="switchTab" data-tab="clothes">
+        <text>服装收藏</text>
+      </view>
+      <view class="tab-item {{activeTab === 'advice' ? 'active' : ''}}" bindtap="switchTab" data-tab="advice">
+        <text>穿搭建议</text>
+      </view>
+    </view>
+
+    <view class="search-row">
+      <view class="search-input-wrap">
+        <input class="search-input" placeholder="{{activeTab === 'clothes' ? '搜索服装名称/风格/季节' : '搜索风格/场景/建议内容'}}" value="{{keyword}}" bindinput="onSearchInput"/>
+      </view>
+    </view>
+
+    <view class="sort-row" wx:if="{{activeTab === 'clothes'}}">
+      <view class="sort-chip {{sortType === 'newest' ? 'active' : ''}}" data-sort="newest" bindtap="onSortChange">最新收藏</view>
+      <view class="sort-chip {{sortType === 'priceHigh' ? 'active' : ''}}" data-sort="priceHigh" bindtap="onSortChange">价格从高到低</view>
+      <view class="sort-chip {{sortType === 'priceLow' ? 'active' : ''}}" data-sort="priceLow" bindtap="onSortChange">价格从低到高</view>
+    </view>
+
+    <view class="sort-row" wx:if="{{activeTab === 'advice'}}">
+      <view class="sort-chip {{adviceSortType === 'newest' ? 'active' : ''}}" data-sort="newest" bindtap="onAdviceSortChange">最新收藏</view>
+      <view class="sort-chip {{adviceSortType === 'style' ? 'active' : ''}}" data-sort="style" bindtap="onAdviceSortChange">按风格排序</view>
+    </view>
+
+    <view class="tab-content" wx:if="{{activeTab === 'clothes'}}">
+      <view wx:if="{{collectedClothes.length === 0}}" class="empty-state">
+        <image class="empty-icon" src="/images/收藏.png" mode="aspectFit"></image>
+        <text class="empty-title">暂无匹配的服装收藏</text>
+        <text class="empty-subtitle">去挑选页收藏你喜欢的单品吧</text>
+        <button class="go-home-btn" bindtap="goToHome">去挑选</button>
+      </view>
+
+      <view wx:else class="clothes-grid">
+        <view wx:for="{{collectedClothes}}" wx:key="id" class="clothes-card" bindtap="viewClothesDetail" data-item="{{item}}">
+          <image class="clothes-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="price-badge">¥{{item.price}}</view>
+          <view class="clothes-info">
+            <text class="clothes-name">{{item.name}}</text>
+            <text class="clothes-category">{{item.category}}</text>
+            <view class="tag-row">
+              <text class="tag">{{item.season}}</text>
+              <text class="tag">{{item.style}}</text>
+            </view>
+          </view>
+          <button class="remove-btn" catchtap="removeFromCollection" data-item="{{item}}">移除</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="tab-content" wx:if="{{activeTab === 'advice'}}">
+      <view wx:if="{{collectedAdvice.length === 0}}" class="empty-state">
+        <image class="empty-icon" src="/images/穿搭.png" mode="aspectFit"></image>
+        <text class="empty-title">暂无匹配的建议收藏</text>
+        <text class="empty-subtitle">去生成穿搭建议并收藏吧</text>
+        <button class="go-home-btn" bindtap="goToFashionAdvice">去获取建议</button>
+      </view>
+
+      <view wx:else class="advice-list">
+        <view wx:for="{{collectedAdvice}}" wx:key="id" class="advice-card" bindtap="viewAdviceDetail" data-item="{{item}}">
+          <view class="advice-header">
+            <text class="advice-meta">{{item.style}} · {{item.scene}}</text>
+            <text class="advice-date">{{item.createTime}}</text>
+          </view>
+          <text class="advice-content">{{item.advice.advice}}</text>
+          <button class="remove-btn advice-remove" catchtap="removeAdvice" data-item="{{item}}">移除</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-actions">
+    <button class="action-btn secondary" bindtap="goBackHome">
+      <image src="/images/首页.png" mode="aspectFit"></image>
+      <text>返回首页</text>
+    </button>
+    <button class="action-btn primary" bindtap="clearAll" wx:if="{{hasCollections}}">
+      <image src="/images/退出登录.png" mode="aspectFit"></image>
+      <text>清空收藏</text>
+    </button>
+  </view>
+</view>

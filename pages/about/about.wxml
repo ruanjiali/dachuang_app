@@ -1,0 +1,150 @@
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header" style="height: 381rpx; display: block; box-sizing: border-box; left: 0rpx; top: 0rpx">
+    <view class="header-content" style="position: relative; left: 0rpx; top: 1rpx; text-align: center;">
+      <image class="logo" src="/images/logo.png" mode="aspectFit" style="position: relative; left: 0rpx; top: -47rpx"></image>
+      <view>
+        <text class="title" style="position: relative; left: 0rpx; top: -65rpx">AI智能穿搭魔法师</text>
+      </view>
+      <view>
+        <text class="subtitle" style="position: relative; left: 0rpx; top: -72rpx">找到属于自己的时尚穿搭</text>
+      </view>
+    </view>
+    <view class="header-bg"></view>
+  </view>
+
+  <!-- 应用介绍 -->
+  <view class="section app-intro" style="height: 674rpx; display: block; box-sizing: border-box">
+    <view class="section-header">
+      <text class="section-title">应用介绍</text>
+      <text class="section-subtitle">了解我们的使命和愿景</text>
+    </view>
+    <view class="intro-content" style="position: relative; left: -1rpx; top: -29rpx">
+      <text class="intro-text" style="position: relative; left: -1rpx; top: -20rpx">
+        AI智能穿搭魔法师是一款基于人工智能技术的时尚穿搭助手应用。我们致力于通过先进的AI算法，
+        为用户提供个性化的穿搭建议，帮助每个人找到最适合自己的时尚风格。
+      </text>
+      <view class="features-grid" style="position: relative; left: -5rpx; top: -43rpx">
+        <view class="feature-item" style="width: 120rpx; height: 120rpx; display: block; box-sizing: content-box">
+          <image class="feature-icon" src="/images/AI识图.png" mode="aspectFit"></image>
+          <text class="feature-name">AI识别</text>
+        </view>
+        <view class="feature-item">
+          <image class="feature-icon" src="/images/穿搭.png" mode="aspectFit"></image>
+          <text class="feature-name">个性化建议</text>
+        </view>
+        <view class="feature-item">
+          <image class="feature-icon" src="/images/虚拟换衣.png" mode="aspectFit"></image>
+          <text class="feature-name">虚拟试衣</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 核心功能 -->
+  <view class="section core-features">
+    <view class="section-header">
+      <text class="section-title">核心功能</text>
+      <text class="section-subtitle">探索我们提供的强大功能</text>
+    </view>
+    <view class="features-list">
+      <view class="feature-card">
+        <view class="feature-header">
+          <image class="feature-icon" src="/images/穿搭.png" mode="aspectFit"></image>
+          <view class="feature-info">
+            <text class="feature-title">智能穿搭建议</text>
+            <text class="feature-subtitle">基于AI算法的个性化推荐</text>
+          </view>
+        </view>
+        <text class="feature-description">
+          通过分析您的个人风格偏好、身材特点和场合需求，AI会为您推荐最适合的穿搭组合，
+          让您在任何场合都能展现最佳形象。
+        </text>
+      </view>
+
+      <view class="feature-card">
+        <view class="feature-header">
+          <image class="feature-icon" src="/images/AI识图.png" mode="aspectFit"></image>
+          <view class="feature-info">
+            <text class="feature-title">AI图像识别</text>
+            <text class="feature-subtitle">智能分析服装特征</text>
+          </view>
+        </view>
+        <text class="feature-description">
+          上传您的服装照片，AI会自动识别服装类型、颜色、风格等特征，
+          为您提供精准的搭配建议和相似单品推荐。
+        </text>
+      </view>
+
+      <view class="feature-card">
+        <view class="feature-header">
+          <image class="feature-icon" src="/images/虚拟换衣.png" mode="aspectFit"></image>
+          <view class="feature-info">
+            <text class="feature-title">虚拟试衣体验</text>
+            <text class="feature-subtitle">在线体验穿搭效果</text>
+          </view>
+        </view>
+        <text class="feature-description">
+          通过虚拟试衣技术，您可以在线体验不同服装的搭配效果，
+          无需实际试穿就能预览整体造型，节省购物时间。
+        </text>
+      </view>
+
+      <view class="feature-card">
+        <view class="feature-header">
+          <image class="feature-icon" src="/images/挑选服装.png" mode="aspectFit"></image>
+          <view class="feature-info">
+            <text class="feature-title">智能服装推荐</text>
+            <text class="feature-subtitle">个性化单品推荐</text>
+          </view>
+        </view>
+        <text class="feature-description">
+          根据您的风格偏好和需求，AI会从海量服装库中筛选出最适合您的单品，
+          帮助您快速找到心仪的服装。
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 技术优势 -->
+  <view class="section tech-advantages">
+    <view class="section-header">
+      <text class="section-title">技术优势</text>
+      <text class="section-subtitle">领先的AI技术保障</text>
+    </view>
+    <view class="advantages-grid">
+      <view class="advantage-item">
+        <view class="advantage-icon">🤖</view>
+        <text class="advantage-title">深度学习算法</text>
+        <text class="advantage-desc">采用最新的深度学习技术，不断提升推荐准确性</text>
+      </view>
+      <view class="advantage-item">
+        <view class="advantage-icon">📱</view>
+        <text class="advantage-title">移动端优化</text>
+        <text class="advantage-desc">专为移动设备优化，流畅的用户体验</text>
+      </view>
+      <view class="advantage-item">
+        <view class="advantage-icon">🔒</view>
+        <text class="advantage-title">隐私保护</text>
+        <text class="advantage-desc">严格的数据保护措施，保障用户隐私安全</text>
+      </view>
+      <view class="advantage-item">
+        <view class="advantage-icon">⚡</view>
+        <text class="advantage-title">实时响应</text>
+        <text class="advantage-desc">毫秒级响应速度，即时获得穿搭建议</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions">
+    <button class="action-btn secondary" bindtap="goBackHome" style="position: relative; left: -28rpx; top: 1rpx">
+      <image src="/images/首页.png" mode="aspectFit"></image>
+      <text>返回首页</text>
+    </button>
+    <button class="action-btn primary" bindtap="shareApp" style="position: relative; left: -42rpx; top: -2rpx">
+      <image src="/images/点赞.png" mode="aspectFit"></image>
+      <text>分享应用</text>
+    </button>
+  </view>
+</view>

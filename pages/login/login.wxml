@@ -1,0 +1,87 @@
+<view class="container">
+  <!-- 背景装饰 -->
+  <view class="bg-decoration">
+    <view class="floating-circle circle-1"></view>
+    <view class="floating-circle circle-2"></view>
+    <view class="floating-circle circle-3"></view>
+    <view class="floating-dots dots-1"></view>
+    <view class="floating-dots dots-2"></view>
+  </view>
+
+  <!-- 顶部logo和标题 -->
+  <view class="header">
+    <view class="logo-container">
+      <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+      <view class="logo-glow"></view>
+    </view>
+    <text class="title">AI穿搭魔法师</text>
+    <text class="subtitle">让AI为你的穿搭出谋划策</text>
+  </view>
+
+  <!-- 登录表单卡片 -->
+  <view class="login-card">
+    <view class="card-header">
+      <text class="card-title">欢迎回来</text>
+      <text class="card-subtitle">登录您的账号继续使用</text>
+    </view>
+
+    <view class="login-form">
+      <!-- 用户名输入 -->
+      <view class="input-group">
+        <view class="input-label">
+          <image class="label-icon" src="/images/用户.png" mode="aspectFit"></image>
+          <text>用户名</text>
+        </view>
+        <input 
+          class="input-field" 
+          type="text" 
+          bindinput="onUsernameInput" 
+          value="{{username}}"
+          maxlength="20"
+          placeholder="请输入用户名"
+        />
+      </view>
+
+      <!-- 密码输入 -->
+      <view class="input-group">
+        <view class="input-label">
+          <image class="label-icon" src="/images/密码.png" mode="aspectFit"></image>
+          <text>密码</text>
+        </view>
+        <input 
+          class="input-field" 
+          type="password" 
+          bindinput="onPasswordInput" 
+          value="{{password}}" 
+          password="true"
+          maxlength="20"
+          placeholder="请输入密码"
+        />
+      </view>
+
+      <!-- 选项区域 -->
+      <view class="options-row">
+        <view class="remember-section">
+          <checkbox 
+            value="remember" 
+            checked="{{rememberPassword}}" 
+            bindtap="onRememberPassword"
+            class="remember-checkbox"
+          ></checkbox>
+          <text class="remember-text">记住密码</text>
+        </view>
+        <text class="forgot-password" bindtap="goToForgotPassword">忘记密码?</text>
+      </view>
+
+      <!-- 登录按钮 -->
+      <button 
+        class="login-btn {{canLogin ? '' : 'disabled'}}" 
+        bindtap="login" 
+        disabled="{{!canLogin || isLoading}}"
+      >
+        <view wx:if="{{isLoading}}" class="loading-spinner"></view>
+        <text wx:else>立即登录</text>
+      </button>
+    </view>
+  </view>
+</view>

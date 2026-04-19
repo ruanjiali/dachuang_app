@@ -1,0 +1,253 @@
+page {
+  --primary-color: #ff6bb5;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --bg-gradient: linear-gradient(135deg, #ff75d6 0%, #f8b2db 100%);
+  --shadow-light: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f9faff 0%, #ffffff 100%);
+  padding: 24rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.title {
+  font-size: 42rpx;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.close-btn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #f3f5fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-icon {
+  font-size: 34rpx;
+  color: #8d95aa;
+}
+
+.upload-card,
+.preview-card,
+.result-card {
+  border-radius: 20rpx;
+  background: #fff;
+  box-shadow: var(--shadow-light);
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.hidden-canvas {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 64px;
+  height: 64px;
+}
+
+.upload-area {
+  border: 2rpx dashed #d8deee;
+  border-radius: 16rpx;
+  min-height: 240rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fbfcff;
+}
+
+.upload-icon {
+  width: 110rpx;
+  height: 110rpx;
+}
+
+.upload-text {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.upload-sub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}
+
+.upload-btn {
+  margin-top: 16rpx;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 14rpx;
+  background: var(--bg-gradient);
+  color: #fff;
+  font-size: 27rpx;
+}
+
+.status {
+  display: block;
+  margin-top: 10rpx;
+  color: #5f6d95;
+  font-size: 23rpx;
+}
+
+.block-title {
+  display: block;
+  color: var(--text-primary);
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 10rpx;
+}
+
+.preview-wrap {
+  position: relative;
+  border-radius: 14rpx;
+  overflow: hidden;
+  background: #f5f7ff;
+}
+
+.preview-image {
+  width: 100%;
+  height: 360rpx;
+}
+
+.delete-btn {
+  position: absolute;
+  right: 12rpx;
+  top: 12rpx;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-icon {
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  background: #f8f9ff;
+  border-radius: 14rpx;
+  padding: 12rpx;
+}
+
+.result-image {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 12rpx;
+  margin-right: 12rpx;
+}
+
+.result-main {
+  flex: 1;
+}
+
+.result-name {
+  display: block;
+  color: var(--text-primary);
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.tag-row {
+  margin-top: 6rpx;
+  display: flex;
+  gap: 8rpx;
+}
+
+.tag {
+  font-size: 20rpx;
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+}
+
+.tag.season {
+  background: #e8f7ff;
+  color: #2f80ed;
+}
+
+.tag.style {
+  background: #fff2fb;
+  color: #e94093;
+}
+
+.tag.fit {
+  background: #eefdf4;
+  color: #2f9e62;
+}
+
+.result-desc {
+  display: block;
+  margin-top: 8rpx;
+  color: var(--text-secondary);
+  font-size: 22rpx;
+  line-height: 1.5;
+}
+
+.mini-remove {
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+  background: #ffe9ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-remove-icon {
+  font-size: 24rpx;
+  color: #df3c6b;
+}
+
+.mini-edit {
+  width: 56rpx;
+  height: 42rpx;
+  border-radius: 999rpx;
+  background: #eef2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8rpx;
+}
+
+.mini-edit-text {
+  font-size: 20rpx;
+  color: #4a5bd6;
+}
+
+.save-btn {
+  margin-top: 14rpx;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 14rpx;
+  background: var(--bg-gradient);
+  color: #fff;
+  font-size: 27rpx;
+}

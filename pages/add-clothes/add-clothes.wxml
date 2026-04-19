@@ -1,0 +1,87 @@
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="title">添加服装</text>
+  </view>
+
+  <!-- 图片上传区域 -->
+  <view class="upload-area">
+    <text class="section-title">服装照片</text>
+    <view class="image-container">
+      <!-- 已选择的图片 -->
+      <block wx:if="{{imageUrl}}">
+        <view class="image-item">
+          <image src="{{imageUrl}}" mode="aspectFill"></image>
+          <view class="delete-btn" bindtap="deleteImage">
+            <text>删除</text>
+          </view>
+        </view>
+      </block>
+
+      <!-- 上传按钮 -->
+      <view class="upload-btn" bindtap="showUploadDialog" wx:if="{{!imageUrl}}">
+        <image class="upload-icon" src="/images/upload.png"></image>
+        <text>上传图片</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 自定义上传弹窗 -->
+  <view class="custom-dialog-mask" wx:if="{{showDialog}}" bindtap="hideUploadDialog"></view>
+  <view class="custom-dialog" wx:if="{{showDialog}}">
+    <view class="dialog-content">
+      <view class="dialog-option" bindtap="takePhoto">
+        <image class="option-icon" src="/images/camera.png"></image>
+        <text>拍照</text>
+      </view>
+      <view class="dialog-option" bindtap="chooseFromAlbum">
+        <image class="option-icon" src="/images/album.png"></image>
+        <text>从相册选择</text>
+      </view>
+      <view class="dialog-cancel" bindtap="hideUploadDialog">取消</view>
+    </view>
+  </view>
+
+  <!-- 服装信息输入 -->
+  <view class="info-section">
+    <view class="input-group">
+      <text class="label">服装名称</text>
+      <input placeholder="请输入服装名称" bindinput="onNameInput" value="{{name}}"/>
+    </view>
+
+    <view class="input-group">
+      <text class="label">服装类别</text>
+      <picker bindchange="onCategoryChange" value="{{categoryIndex}}" range="{{categoryList}}" range-key="name">
+        <view class="picker">
+          {{categoryList[categoryIndex].name || '请选择类别'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="input-group">
+      <text class="label">季节</text>
+      <picker bindchange="onSeasonChange" value="{{seasonIndex}}" range="{{seasonList}}">
+        <view class="picker">
+          {{seasonList[seasonIndex] || '请选择季节'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="input-group">
+      <text class="label">风格</text>
+      <picker bindchange="onStyleChange" value="{{styleIndex}}" range="{{styleList}}">
+        <view class="picker">
+          {{styleList[styleIndex] || '请选择风格'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="input-group">
+      <text class="label">描述</text>
+      <textarea placeholder="添加服装描述" bindinput="onDescriptionInput" value="{{description}}" auto-height></textarea>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <button class="submit-btn" bindtap="submitClothes">保存服装</button>
+</view>

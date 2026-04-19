@@ -1,0 +1,54 @@
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="title">上传我的搭配</text>
+  </view>
+
+  <!-- 图片上传区域 -->
+  <view class="upload-area">
+    <text class="section-title">搭配照片</text>
+    <view class="image-container">
+      <!-- 已选择的图片 -->
+      <block wx:for="{{imageList}}" wx:key="index">
+        <view class="image-item">
+          <image src="{{item}}" mode="aspectFill"></image>
+          <view class="delete-btn" data-index="{{index}}" bindtap="deleteImage">
+            <image src="/images/delete.png"></image>
+          </view>
+        </view>
+      </block>
+
+      <!-- 上传按钮 -->
+      <view class="upload-btn" bindtap="showUploadDialog" wx:if="{{imageList.length < maxCount}}">
+        <image class="upload-icon" src="/images/upload.png"></image>
+        <text>上传图片</text>
+      </view>
+    </view>
+    <text class="tips">最多上传9张图片</text>
+  </view>
+
+  <!-- 自定义上传弹窗 -->
+  <view class="custom-dialog-mask" wx:if="{{showDialog}}" bindtap="hideUploadDialog"></view>
+  <view class="custom-dialog" wx:if="{{showDialog}}">
+    <view class="dialog-content">
+      <view class="dialog-option" bindtap="takePhoto">
+        <image class="option-icon" src="/images/camera.png"></image>
+        <text>拍照</text>
+      </view>
+      <view class="dialog-option" bindtap="chooseFromAlbum">
+        <image class="option-icon" src="/images/album.png"></image>
+        <text>从相册选择</text>
+      </view>
+      <view class="dialog-cancel" bindtap="hideUploadDialog">取消</view>
+    </view>
+  </view>
+
+  <!-- 描述输入 -->
+  <view class="description-section">
+    <text class="section-title">搭配描述</text>
+    <textarea placeholder="分享你的搭配心得..." bindinput="onDescriptionInput" value="{{description}}" auto-height></textarea>
+  </view>
+
+  <!-- 提交按钮 -->
+  <button class="submit-btn" bindtap="submitOutfit">发布搭配</button>
+</view>

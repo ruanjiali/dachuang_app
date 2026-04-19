@@ -1,0 +1,460 @@
+.container {
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+/* 顶部导航 */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+  box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+}
+
+.back-btn icon {
+  margin-right: 10rpx;
+}
+
+.back-btn text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.title-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.page-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.collect-btn {
+  display: flex;
+  align-items: center;
+}
+
+.collect-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.collect-btn text {
+  font-size: 28rpx;
+  color: #333;
+  margin-left: 10rpx;
+}
+
+/* 拍照选择区域 */
+.photo-selection {
+  background-color: #fff;
+  margin: 20rpx 30rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.selection-title {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.selection-title text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.selection-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.photo-btn {
+  flex: 1;
+  height: 120rpx;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.take-photo {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.take-photo:active {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  transform: scale(0.98);
+}
+
+.choose-album {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+}
+
+.choose-album:active {
+  background: linear-gradient(135deg, #e085e8 0%, #e54d62 100%);
+  transform: scale(0.98);
+}
+
+.photo-btn .btn-icon {
+  width: 50rpx;
+  height: 50rpx;
+  margin-bottom: 10rpx;
+  filter: brightness(0) invert(1);
+}
+
+.photo-btn text {
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* 图片展示区域 */
+.image-container {
+  width: 100%;
+  height: 500rpx;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 30rpx 30rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.preview-image:active {
+  transform: scale(1.05);
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder-icon {
+  width: 120rpx;
+  height: 120rpx;
+  opacity: 0.6;
+  margin-bottom: 20rpx;
+}
+
+.placeholder text {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* 试穿结果区域 */
+.result-container {
+  background-color: #fff;
+  margin: 0 30rpx 30rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.result-title text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.result-image-container {
+  width: 100%;
+  height: 400rpx;
+  background-color: #f9f9f9;
+  border-radius: 15rpx;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-image {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.result-image:active {
+  transform: scale(1.05);
+}
+
+/* 交互按钮区域 */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30rpx 30rpx;
+  gap: 20rpx;
+}
+
+.try-on-btn,
+.save-btn {
+  flex: 1;
+  height: 90rpx;
+  border-radius: 45rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.try-on-btn {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: #fff;
+}
+
+.try-on-btn:active {
+  background: linear-gradient(to right, #ff6b4a, #fea46b);
+  transform: scale(0.98);
+}
+
+.try-on-btn[disabled] {
+  background: #ccc;
+  color: #999;
+}
+
+.save-btn {
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  color: #fff;
+}
+
+.save-btn:active {
+  background: linear-gradient(to right, #3e9bfe, #00e2fe);
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-bottom: 8rpx;
+}
+
+.try-on-btn .btn-icon,
+.save-btn .btn-icon {
+  filter: brightness(0) invert(1);
+}
+
+.try-on-btn text,
+.save-btn text {
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* 服装信息区域 */
+.info-container {
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  margin: 0 30rpx 30rpx;
+}
+
+.info-title {
+  text-align: center;
+  margin-bottom: 25rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.info-title text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.info-item {
+  display: flex;
+  margin-bottom: 25rpx;
+  padding-bottom: 25rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.label {
+  width: 120rpx;
+  font-size: 28rpx;
+  color: #999;
+  font-weight: 500;
+}
+
+.value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.description-item {
+  display: block;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+/* 使用提示区域 */
+.tips-container {
+  background-color: #fff;
+  margin: 0 30rpx 30rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.tips-title {
+  text-align: center;
+  margin-bottom: 25rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.tips-title text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.tips-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.tips-content text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  padding-left: 20rpx;
+  position: relative;
+}
+
+.tips-content text::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12rpx;
+  width: 8rpx;
+  height: 8rpx;
+  background-color: #4facfe;
+  border-radius: 50%;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20rpx); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.photo-selection, .image-container, .result-container, .action-buttons, .info-container, .tips-container {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.photo-selection {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.image-container {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.result-container {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.action-buttons {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.info-container {
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+.tips-container {
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .selection-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .image-container {
+    height: 400rpx;
+  }
+  
+  .result-image-container {
+    height: 300rpx;
+  }
+}

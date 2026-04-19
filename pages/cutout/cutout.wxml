@@ -1,0 +1,49 @@
+<view class="page">
+  <view class="hero">
+    <text class="hero-title">AI一键抠图</text>
+    <text class="hero-subtitle">上传图片，自动去背景，可直接保存到相册</text>
+  </view>
+
+  <view class="card">
+    <view class="section-header">
+      <text class="section-title">原图</text>
+      <text class="section-action" bindtap="chooseImage">重新选择</text>
+    </view>
+    <view class="choose-area" bindtap="chooseImage">
+      <image class="source-image" src="{{sourceImage}}" mode="aspectFit" hidden="{{!sourceImage}}"></image>
+      <view class="placeholder" hidden="{{sourceImage}}">
+        <icon type="add" size="34" color="#8ea3ff"></icon>
+        <text class="placeholder-text">点击选择图片（相册 / 相机）</text>
+      </view>
+    </view>
+
+    <button class="primary-btn" bindtap="startCutout" disabled="{{processing || !sourceImage}}">
+      {{processing ? '处理中...' : '开始抠图'}}
+    </button>
+
+    <button class="ghost-btn" bindtap="openCutoutWeb" wx:if="{{showAdvanced}}">
+      使用备用网页抠图
+    </button>
+  </view>
+
+  <view class="card status-card" wx:if="{{statusText || lastError}}">
+    <text class="status-text {{lastError ? 'error' : ''}}">{{statusText}}</text>
+    <text class="error-text" wx:if="{{lastError}}">{{lastError}}</text>
+  </view>
+
+  <view class="card log-card" wx:if="{{attemptLog.length}}">
+    <text class="log-title">执行路径</text>
+    <view class="log-item" wx:for="{{attemptLog}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="card result-card" wx:if="{{resultImage}}">
+    <view class="section-header">
+      <text class="section-title">抠图结果</text>
+      <text class="section-tip">可长按预览</text>
+    </view>
+    <image class="result-image" src="{{resultImage}}" mode="aspectFit" key="{{resultImage}}" binderror="onImageError"></image>
+    <button class="primary-btn save-btn" bindtap="saveResultToAlbum">保存到相册</button>
+  </view>
+
+  <view class="footer-space"></view>
+</view>

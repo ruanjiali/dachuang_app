@@ -1,0 +1,165 @@
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="back-button" bindtap="onBackPress">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="title">穿搭顾问</text>
+    <view class="header-actions">
+      <view class="header-btn" bindtap="openHistoryPanel">历史</view>
+      <view class="header-btn danger" bindtap="clearConversation">清空</view>
+    </view>
+  </view>
+
+  <!-- 聊天内容区域 -->
+  <scroll-view 
+    id="scroll-view" 
+    class="chat-scroll-view" 
+    scroll-y 
+    scroll-into-view="{{scrollToMessage}}"
+    bindscrolltoupper="onScrollToUpper"
+    enable-flex
+  >
+    <view id="chat-container" class="chat-container">
+      <!-- 消息列表 -->
+      <block wx:for="{{messages}}" wx:key="id">
+        <!-- 机器人消息 -->
+        <view id="message-{{item.id}}" wx:if="{{item.type === 'ai' || item.type === 'system'}}" class="message-wrapper bot">
+          <view class="avatar bot-avatar">
+            <image src="/images/logo.png" mode="aspectFill" style="width: 100%; height: 100%; border-radius: 50%;"/>
+          </view>
+          <view class="message-content bot-message">
+            <rich-text nodes="{{item.nodes}}"></rich-text>
+            <image
+              wx:if="{{item.generatedImageUrl}}"
+              class="generated-image"
+              src="{{item.generatedImageUrl}}"
+              mode="widthFix"
+              data-url="{{item.generatedImageUrl}}"
+              bindtap="previewGeneratedImage"
+            />
+          </view>
+        </view>
+        
+        <!-- 用户消息 -->
+        <view id="message-{{item.id}}" wx:else class="message-wrapper user">
+          <view class="message-content user-message">
+            <text selectable>{{item.content}}</text>
+          </view>
+          <view class="avatar user-avatar">
+            <image wx:if="{{userAvatar}}" src="{{userAvatar}}" mode="aspectFill" style="width: 100%; height: 100%; border-radius: 50%;"/>
+            <text wx:else>我</text>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 加载状态 -->
+      <view wx:if="{{isLoading}}" class="loading-wrapper">
+        <view class="avatar bot-avatar">
+          <image src="/images/logo.png" mode="aspectFill" style="width: 100%; height: 100%; border-radius: 50%;"/>
+        </view>
+        <view class="loading-indicator">
+          <view class="loading-dot"></view>
+          <view class="loading-dot"></view>
+          <view class="loading-dot"></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="quick-prompt-row" wx:if="{{messages.length < 4}}">
+    <view wx:for="{{quickPrompts}}" wx:key="*this" class="quick-prompt" bindtap="onQuickPromptTap" data-text="{{item}}">
+      <text>{{item}}</text>
+    </view>
+  </view>
+
+  <view class="retry-row" wx:if="{{!isLoading && lastQuestion}}">
+    <text class="retry-link" bindtap="retryLastQuestion">重试上一条问题</text>
+    <text class="retry-link profile-link" bindtap="toggleProfilePanel">{{showProfilePanel ? '收起参数' : '填写参数'}}</text>
+  </view>
+
+  <view class="profile-panel" wx:if="{{showProfilePanel}}">
+    <view class="profile-toggle-row">
+      <text class="profile-toggle-title">qwen-vl-max（百炼）</text>
+      <text class="profile-toggle-desc">默认开启</text>
+    </view>
+    <input class="profile-input profile-input-wide" placeholder="DASHSCOPE_API_KEY（仅本机调试，不要提交代码）" password value="{{dashscopeApiKey}}" bindinput="onDashscopeKeyInput" />
+    <view class="profile-grid">
+      <input class="profile-input" placeholder="性别" value="{{profile.gender}}" data-field="gender" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="年龄（如25岁）" value="{{profile.age}}" data-field="age" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="身高（如163cm）" value="{{profile.height}}" data-field="height" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="体重（如52kg）" value="{{profile.weight}}" data-field="weight" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="身材特征（如梨形）" value="{{profile.bodyType}}" data-field="bodyType" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="城市（用于实时天气，如北京）" value="{{profile.city}}" data-field="city" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="季节（春/夏/秋/冬）" value="{{profile.season}}" data-field="season" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="天气（晴/雨/阴）" value="{{profile.weather}}" data-field="weather" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="温度（如18~22°C）" value="{{profile.temperature}}" data-field="temperature" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="场合（通勤/约会）" value="{{profile.occasion}}" data-field="occasion" bindinput="onProfileInput" />
+      <input class="profile-input" placeholder="风格偏好（简约/法式）" value="{{profile.stylePref}}" data-field="stylePref" bindinput="onProfileInput" />
+    </view>
+    <input class="profile-input profile-input-wide" placeholder="其他补充信息" value="{{profile.extra}}" data-field="extra" bindinput="onProfileInput" />
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="input-container">
+    <view class="upload-row" style="height: 102rpx; display: flex; box-sizing: border-box">
+      <view class="upload-btn" bindtap="chooseImage">
+        <text>上传穿搭图</text>
+      </view>
+      <view class="upload-tip" wx:if="{{imagePath}}">
+        <image class="upload-preview" src="{{imagePath}}" mode="aspectFill" />
+        <text class="remove-link" bindtap="removeImage">移除</text>
+      </view>
+    </view>
+    <view class="upload-preview-large-wrap" wx:if="{{imagePath}}">
+      <image class="upload-preview-large" src="{{imagePath}}" mode="aspectFit" bindtap="previewSelectedImage" />
+    </view>
+    <view class="input-wrapper">
+      <textarea 
+        class="input-textarea" 
+        placeholder="请输入问题（可仅上传图片）"
+        value="{{inputText}}"
+        bindinput="onInputChange"
+        bindconfirm="sendMessage"
+        confirm-type="send"
+        auto-height
+        maxlength="500"
+        show-confirm-bar="false"
+        style="position: relative; height: 81rpx; display: block; box-sizing: border-box; left: 0rpx; top: 0rpx"></textarea>
+    </view>
+    <view class="send-btn" bindtap="sendMessage" wx:if="{{hasInput}}">
+      <text>发送</text>
+    </view>
+    <view class="send-btn send-btn-disabled" wx:else>
+      <text>发送</text>
+    </view>
+  </view>
+
+  <view class="history-mask" wx:if="{{showHistoryPanel}}" bindtap="closeHistoryPanel"></view>
+  <view class="history-panel" wx:if="{{showHistoryPanel}}">
+    <view class="history-head">
+      <text class="history-title">历史对话</text>
+      <view class="history-head-actions">
+        <view class="history-action" bindtap="startNewSession">新建</view>
+        <view class="history-action danger" bindtap="clearAllSessions">全删</view>
+      </view>
+    </view>
+    <scroll-view class="history-list" scroll-y>
+      <view class="history-empty" wx:if="{{sessions.length === 0}}">
+        <text>暂无历史对话</text>
+      </view>
+      <view wx:for="{{sessions}}" wx:key="id" class="history-item {{item.id === currentSessionId ? 'active' : ''}}">
+        <view class="history-item-main" bindtap="switchSession" data-id="{{item.id}}">
+          <text class="history-item-title">{{item.title}}</text>
+          <text class="history-item-time">{{item.timeText}}</text>
+        </view>
+        <view class="history-item-del" bindtap="deleteSession" data-id="{{item.id}}">
+          <text>删除</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="history-foot">
+      <view class="history-close" bindtap="closeHistoryPanel">关闭</view>
+    </view>
+  </view>
+</view>

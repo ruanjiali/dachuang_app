@@ -1,0 +1,112 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="back-btn" bindtap="goBackHome">
+      <icon type="back" size="14" color="#333" />
+      <text>返回</text>
+    </view>
+    <view class="title-container">
+      <text class="page-title">随手拍试穿</text>
+    </view>
+    <view class="collect-btn" bindtap="toggleCollection" wx:if="{{clothesInfo}}">
+      <image class="collect-icon" src="{{isCollected ? '/images/点赞.png' : '/images/评级灰色.png'}}" mode="aspectFit"></image>
+      <text>{{isCollected ? '已收藏' : '收藏'}}</text>
+    </view>
+  </view>
+
+  <!-- 拍照选择区域 -->
+  <view class="photo-selection">
+    <view class="selection-title">
+      <text>选择照片方式</text>
+    </view>
+    <view class="selection-buttons">
+      <button class="photo-btn take-photo" bindtap="takePhoto">
+        <image class="btn-icon" src="/images/拍照.png" mode="aspectFit"></image>
+        <text>拍照</text>
+      </button>
+      <button class="photo-btn choose-album" bindtap="chooseFromAlbum">
+        <image class="btn-icon" src="/images/搜索.png" mode="aspectFit"></image>
+        <text>从相册选择</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 图片展示区域 -->
+  <view class="image-container">
+    <image wx:if="{{imagePath}}" src="{{imagePath}}" mode="aspectFit" class="preview-image" bindtap="previewImage" data-type="source"></image>
+    <view wx:else class="placeholder">
+      <image class="placeholder-icon" src="/images/拍照.png" mode="aspectFit"></image>
+      <text>请拍照或选择图片开始试穿</text>
+    </view>
+  </view>
+
+  <!-- 试穿结果区域 -->
+  <view class="result-container" wx:if="{{resultImage}}">
+    <view class="result-title">
+      <text>试穿效果</text>
+    </view>
+    <view class="result-image-container">
+      <image src="{{resultImage}}" mode="aspectFit" class="result-image" bindtap="previewImage" data-type="result"></image>
+    </view>
+  </view>
+
+  <!-- 交互按钮区域 -->
+  <view class="action-buttons" wx:if="{{imagePath}}">
+    <button class="try-on-btn" bindtap="tryOnClothes" disabled="{{loading}}">
+      <image class="btn-icon" src="/images/虚拟换衣.png" mode="aspectFit"></image>
+      <text>{{loading ? '处理中...' : '开始试穿'}}</text>
+    </button>
+    <button class="save-btn" bindtap="goToAiRecognition">
+      <image class="btn-icon" src="/images/AI识图.png" mode="aspectFit"></image>
+      <text>AI识图</text>
+    </button>
+    <button class="save-btn" bindtap="saveImage" wx:if="{{resultImage}}">
+      <image class="btn-icon" src="/images/收藏.png" mode="aspectFit"></image>
+      <text>保存图片</text>
+    </button>
+    <button class="save-btn" bindtap="saveToOutfits">
+      <image class="btn-icon" src="/images/穿搭.png" mode="aspectFit"></image>
+      <text>存到搭配</text>
+    </button>
+  </view>
+
+  <!-- 服装信息区域 -->
+  <view class="info-container" wx:if="{{clothesInfo}}">
+    <view class="info-title">
+      <text>服装信息</text>
+    </view>
+    <view class="info-item">
+      <text class="label">名称:</text>
+      <text class="value">{{clothesInfo.name}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">分类:</text>
+      <text class="value">{{clothesInfo.category}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">风格:</text>
+      <text class="value">{{clothesInfo.style}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">季节:</text>
+      <text class="value">{{clothesInfo.season}}</text>
+    </view>
+    <view class="info-item description-item">
+      <text class="label">描述:</text>
+      <text class="value description">{{clothesInfo.description || '暂无详细描述'}}</text>
+    </view>
+  </view>
+
+  <!-- 使用提示 -->
+  <view class="tips-container" wx:if="{{showTips}}">
+    <view class="tips-title">
+      <text>使用提示</text>
+    </view>
+    <view class="tips-content">
+      <text>1. 拍照或选择清晰的人像照片</text>
+      <text>2. 确保光线充足，背景简洁</text>
+      <text>3. 点击"开始试穿"进行虚拟换装</text>
+      <text>4. 试穿完成后可保存效果图片</text>
+    </view>
+  </view>
+</view>

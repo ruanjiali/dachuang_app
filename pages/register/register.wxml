@@ -1,0 +1,121 @@
+<view class="container">
+  <!-- 背景装饰 -->
+  <view class="bg-decoration">
+    <view class="floating-circle circle-1"></view>
+    <view class="floating-circle circle-2"></view>
+    <view class="floating-circle circle-3"></view>
+    <view class="floating-dots dots-1"></view>
+    <view class="floating-dots dots-2"></view>
+  </view>
+
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="logo-container">
+      <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+      <view class="logo-glow"></view>
+    </view>
+    <text class="title">AI穿搭魔法师</text>
+    <text class="subtitle">开启智能穿搭新时代</text>
+  </view>
+
+  <!-- 注册表单卡片 -->
+  <view class="register-card">
+    <view class="card-header">
+      <text class="card-title">创建账号</text>
+      <text class="card-subtitle">填写以下信息完成注册</text>
+    </view>
+
+    <view class="register-form">
+      <!-- 用户名输入 -->
+      <view class="input-group">
+        <view class="input-label">
+          <image class="label-icon" src="/images/用户.png" mode="aspectFit"></image>
+          <text>用户名</text>
+        </view>
+        <input 
+          class="input-field" 
+          type="text" 
+          bindinput="onUsernameInput" 
+          value="{{username}}"
+          maxlength="20"
+        />
+        <view class="input-tip" wx:if="{{usernameError}}">
+          <text class="error-text">{{usernameError}}</text>
+        </view>
+      </view>
+
+      <!-- 邮箱输入已移除 -->
+
+      <!-- 密码输入 -->
+      <view class="input-group">
+        <view class="input-label">
+          <image class="label-icon" src="/images/密码.png" mode="aspectFit"></image>
+          <text>密码</text>
+        </view>
+        <input 
+          class="input-field" 
+          type="password" 
+          bindinput="onPasswordInput" 
+          value="{{password}}"
+          password="true"
+          maxlength="20"
+        />
+        <view class="input-tip" wx:if="{{passwordError}}">
+          <text class="error-text">{{passwordError}}</text>
+        </view>
+      </view>
+
+      <!-- 确认密码输入 -->
+      <view class="input-group">
+        <view class="input-label">
+          <image class="label-icon" src="/images/密码.png" mode="aspectFit"></image>
+          <text>确认密码</text>
+        </view>
+        <input 
+          class="input-field" 
+          type="password" 
+          bindinput="onConfirmPasswordInput" 
+          value="{{confirmPassword}}"
+          password="true"
+          maxlength="20"
+          placeholder="请再次输入密码"
+        />
+        <view class="input-tip" wx:if="{{confirmPasswordError}}">
+          <text class="error-text">{{confirmPasswordError}}</text>
+        </view>
+      </view>
+      
+      <!-- 同意协议 -->
+      <view class="terms-group">
+        <view class="terms-checkbox" bindtap="onAgreeToTerms">
+          <view class="checkbox {{agreeToTerms ? 'checked' : ''}}">
+            <text wx:if="{{agreeToTerms}}">✓</text>
+          </view>
+          <text class="terms-text">我已阅读并同意</text>
+          <text class="terms-link" catchtap="showTerms">《用户协议》</text>
+          <text class="terms-text">和</text>
+          <text class="terms-link" catchtap="showPrivacy">《隐私政策》</text>
+        </view>
+        <view class="input-tip" wx:if="{{termsError}}">
+          <text class="error-text">{{termsError}}</text>
+        </view>
+      </view>
+
+      <!-- 注册按钮 -->
+      <button 
+        class="register-btn {{canRegister ? '' : 'disabled'}}" 
+        bindtap="register" 
+        disabled="{{!canRegister || isLoading}}"
+      >
+        <view wx:if="{{isLoading}}" class="loading-spinner"></view>
+        <text wx:else>立即注册</text>
+      </button>
+
+      <!-- 登录链接 -->
+      <view class="login-link">
+        <text class="link-text">已有账号？</text>
+        <text class="link-btn" bindtap="goToLogin">立即登录</text>
+      </view>
+    </view>
+  </view>
+</view>

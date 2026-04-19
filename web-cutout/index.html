@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>网页抠图工具</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Helvetica Neue", Arial, "Noto Sans", "Microsoft YaHei", sans-serif;
+      background: #f5f7fb;
+      color: #1f2430;
+    }
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(17, 24, 39, 0.08);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .title {
+      font-size: 22px;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .desc {
+      margin: 0;
+      color: #586074;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: #556074;
+    }
+    .field input, .field select {
+      width: 100%;
+      height: 40px;
+      border: 1px solid #d8deeb;
+      border-radius: 10px;
+      padding: 0 10px;
+      outline: none;
+      font-size: 14px;
+      background: #fff;
+    }
+    .field input:focus, .field select:focus {
+      border-color: #4a7bff;
+      box-shadow: 0 0 0 3px rgba(74, 123, 255, 0.15);
+    }
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      height: 40px;
+      border: 0;
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-primary { background: #3268ff; color: #fff; }
+    .btn-plain { background: #edf1ff; color: #3356bf; }
+    .btn-danger { background: #ffecee; color: #c7254e; }
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #3356bf;
+      min-height: 20px;
+    }
+    .preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .panel {
+      border: 1px solid #e5eaf5;
+      border-radius: 12px;
+      padding: 10px;
+      background: #fafbff;
+    }
+    .panel h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #3a4560;
+    }
+    .img-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      background: #f0f3fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px dashed #d0d8eb;
+    }
+    .img-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .logs {
+      margin: 0;
+      padding-left: 16px;
+      max-height: 180px;
+      overflow: auto;
+      color: #556074;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    @media (max-width: 780px) {
+      .grid, .preview { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1 class="title">网页抠图工具</h1>
+      <p class="desc">可直接部署为 H5，并通过 web-view 接入小程序。支持文件上传、Base64 上传和异步任务轮询。</p>
+    </div>
+
+    <div class="card">
+      <div class="grid">
+        <div class="field">
+          <label>后端地址 baseUrl</label>
+          <input id="baseUrl" value="https://your-backend.example.com" />
+        </div>
+        <div class="field">
+          <label>上传接口 uploadPath</label>
+          <input id="uploadPath" value="/api/mini/remove-bg" />
+        </div>
+        <div class="field">
+          <label>JSON上传接口 jsonPath</label>
+          <input id="jsonPath" value="/api/mini/remove-bg-json" />
+        </div>
+        <div class="field">
+          <label>任务结果接口 resultPath</label>
+          <input id="resultPath" value="/api/mini/remove-bg/result" />
+        </div>
+      </div>
+      <div class="actions">
+        <input id="fileInput" type="file" accept="image/*" />
+        <button class="btn-primary" id="runBtn">开始抠图</button>
+        <button class="btn-plain" id="saveCfgBtn">保存配置</button>
+        <button class="btn-danger" id="clearBtn">清空</button>
+      </div>
+      <div class="status" id="statusText"></div>
+    </div>
+
+    <div class="card preview">
+      <div class="panel">
+        <h3>原图</h3>
+        <div class="img-box"><img id="srcImg" /></div>
+      </div>
+      <div class="panel">
+        <h3>结果图</h3>
+        <div class="img-box"><img id="dstImg" /></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;font-size:14px;">执行日志</h3>
+      <ol id="logs" class="logs"></ol>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const state = {
+      file: null,
+      srcUrl: '',
+      resultUrl: ''
+    };
+
+    function now() {
+      return new Date().toLocaleTimeString();
+    }
+
+    function setStatus(text, isError = false) {
+      const el = $('statusText');
+      el.textContent = text;
+      el.style.color = isError ? '#c7254e' : '#3356bf';
+    }
+
+    function addLog(text) {
+      const li = document.createElement('li');
+      li.textContent = `${now()} ${text}`;
+      $('logs').appendChild(li);
+      $('logs').scrollTop = $('logs').scrollHeight;
+    }
+
+    function clearAll() {
+      state.file = null;
+      state.srcUrl = '';
+      state.resultUrl = '';
+      $('srcImg').src = '';
+      $('dstImg').src = '';
+      $('fileInput').value = '';
+      $('logs').innerHTML = '';
+      setStatus('');
+    }
+
+    function joinUrl(base, path) {
+      const b = String(base || '').replace(/\/$/, '');
+      const p = String(path || '');
+      if (!p) return b;
+      if (p.startsWith('http')) return p;
+      return `${b}${p.startsWith('/') ? '' : '/'}${p}`;
+    }
+
+    function parsePayload(raw) {
+      if (typeof raw === 'string') {
+        try { return JSON.parse(raw); } catch (e) { return { raw }; }
+      }
+      if (raw && typeof raw === 'object') return raw;
+      return {};
+    }
+
+    function extractErr(payload) {
+      const errCode = Number(payload?.err_code || payload?.errcode || payload?.code || 0);
+      const errMsg = String(payload?.errMsg || payload?.errmsg || payload?.message || payload?.msg || payload?.error || '');
+      return { errCode, errMsg };
+    }
+
+    function extractTaskId(payload) {
+      return payload?.data?.taskId || payload?.data?.task_id || payload?.data?.jobId || payload?.data?.job_id || payload?.taskId || payload?.task_id || payload?.jobId || payload?.job_id || '';
+    }
+
+    function extractResultUrl(payload, baseUrl) {
+      const value =
+        payload?.data?.url || payload?.data?.resultUrl || payload?.data?.result_url || payload?.data?.imageUrl || payload?.data?.image_url || payload?.data?.fileUrl || payload?.data?.file_url || payload?.data?.result ||
+        payload?.url || payload?.resultUrl || payload?.result_url || payload?.imageUrl || payload?.image_url || payload?.fileUrl || payload?.file_url || payload?.result || '';
+      if (!value) return '';
+      const s = String(value);
+      if (s.startsWith('http') || s.startsWith('data:image')) return s;
+      return `${String(baseUrl || '').replace(/\/$/, '')}/${s.replace(/^\//, '')}`;
+    }
+
+    async function uploadByFile(url, file) {
+      const fd = new FormData();
+      fd.append('image', file);
+      fd.append('timestamp', String(Date.now()));
+      const res = await fetch(url, { method: 'POST', body: fd });
+      const text = await res.text();
+      return { statusCode: res.status, data: parsePayload(text) };
+    }
+
+    async function fileToBase64(file) {
+      return await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const raw = String(reader.result || '');
+          resolve(raw.includes(',') ? raw.split(',')[1] : raw);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadByJson(url, file) {
+      const b64 = await fileToBase64(file);
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: b64, imageBase64: b64, timestamp: Date.now() })
+      });
+      const text = await res.text();
+      return { statusCode: res.status, data: parsePayload(text) };
+    }
+
+    async function pollResult(resultUrl, taskId, baseUrl) {
+      const start = Date.now();
+      const timeout = 40000;
+      while (Date.now() - start < timeout) {
+        const sep = resultUrl.includes('?') ? '&' : '?';
+        const res = await fetch(`${resultUrl}${sep}taskId=${encodeURIComponent(taskId)}`);
+        const payload = parsePayload(await res.text());
+        const { errCode, errMsg } = extractErr(payload);
+        if (errCode === 42001 || errMsg.includes('access_token expired')) throw new Error('WECHAT_ACCESS_TOKEN_EXPIRED');
+        const out = extractResultUrl(payload, baseUrl);
+        if (out) return out;
+        const status = String(payload?.data?.status || payload?.status || '').toLowerCase();
+        if (['failed', 'fail', 'error', 'cancelled', 'canceled'].includes(status)) throw new Error(errMsg || '异步任务失败');
+        await new Promise((r) => setTimeout(r, 1500));
+      }
+      throw new Error('异步任务超时');
+    }
+
+    async function runCutout() {
+      const baseUrl = $('baseUrl').value.trim();
+      const uploadPath = $('uploadPath').value.trim();
+      const jsonPath = $('jsonPath').value.trim();
+      const resultPath = $('resultPath').value.trim();
+      if (!baseUrl || !uploadPath) {
+        setStatus('请先填写 baseUrl 与 uploadPath', true);
+        return;
+      }
+      if (!state.file) {
+        setStatus('请先选择图片', true);
+        return;
+      }
+
+      $('runBtn').disabled = true;
+      setStatus('处理中...');
+      addLog('开始执行抠图');
+
+      try {
+        const uploadUrl = joinUrl(baseUrl, uploadPath);
+        addLog(`方案A 文件上传：${uploadUrl}`);
+        let response = await uploadByFile(uploadUrl, state.file);
+        let payload = response.data;
+        let { errCode, errMsg } = extractErr(payload);
+        if (errCode === 42001 || errMsg.includes('access_token expired')) throw new Error('WECHAT_ACCESS_TOKEN_EXPIRED');
+
+        let finalUrl = extractResultUrl(payload, baseUrl);
+        if (!finalUrl) {
+          const taskIdA = extractTaskId(payload);
+          if (taskIdA) {
+            addLog(`方案A返回任务ID：${taskIdA}`);
+            finalUrl = await pollResult(joinUrl(baseUrl, resultPath), taskIdA, baseUrl);
+          }
+        }
+
+        if (!finalUrl) {
+          const jsonUrl = joinUrl(baseUrl, jsonPath || uploadPath);
+          addLog(`方案B Base64 JSON：${jsonUrl}`);
+          response = await uploadByJson(jsonUrl, state.file);
+          payload = response.data;
+          ({ errCode, errMsg } = extractErr(payload));
+          if (errCode === 42001 || errMsg.includes('access_token expired')) throw new Error('WECHAT_ACCESS_TOKEN_EXPIRED');
+
+          finalUrl = extractResultUrl(payload, baseUrl);
+          if (!finalUrl) {
+            const taskIdB = extractTaskId(payload);
+            if (taskIdB) {
+              addLog(`方案B返回任务ID：${taskIdB}`);
+              finalUrl = await pollResult(joinUrl(baseUrl, resultPath), taskIdB, baseUrl);
+            }
+          }
+
+          if (!finalUrl) throw new Error(errMsg || `服务返回异常（HTTP ${response.statusCode}）`);
+        }
+
+        state.resultUrl = finalUrl;
+        $('dstImg').src = finalUrl;
+        setStatus('抠图完成');
+        addLog('抠图成功');
+      } catch (e) {
+        const msg = String(e?.message || e || '未知错误');
+        if (msg === 'WECHAT_ACCESS_TOKEN_EXPIRED') {
+          setStatus('后端微信 access_token 已过期，请后端刷新后重试', true);
+        } else {
+          setStatus(`抠图失败：${msg}`, true);
+        }
+        addLog(`失败：${msg}`);
+      } finally {
+        $('runBtn').disabled = false;
+      }
+    }
+
+    function saveConfig() {
+      const cfg = {
+        baseUrl: $('baseUrl').value.trim(),
+        uploadPath: $('uploadPath').value.trim(),
+        jsonPath: $('jsonPath').value.trim(),
+        resultPath: $('resultPath').value.trim()
+      };
+      localStorage.setItem('cutout-web-config', JSON.stringify(cfg));
+      setStatus('配置已保存');
+      addLog('配置已保存到浏览器');
+    }
+
+    function restoreConfig() {
+      const raw = localStorage.getItem('cutout-web-config');
+      if (!raw) return;
+      try {
+        const cfg = JSON.parse(raw);
+        if (cfg.baseUrl) $('baseUrl').value = cfg.baseUrl;
+        if (cfg.uploadPath) $('uploadPath').value = cfg.uploadPath;
+        if (cfg.jsonPath) $('jsonPath').value = cfg.jsonPath;
+        if (cfg.resultPath) $('resultPath').value = cfg.resultPath;
+      } catch (e) {}
+    }
+
+    $('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      state.file = file;
+      state.srcUrl = URL.createObjectURL(file);
+      $('srcImg').src = state.srcUrl;
+      $('dstImg').src = '';
+      setStatus('图片已选择');
+      addLog(`已选择图片：${file.name}`);
+    });
+    $('runBtn').addEventListener('click', runCutout);
+    $('saveCfgBtn').addEventListener('click', saveConfig);
+    $('clearBtn').addEventListener('click', clearAll);
+
+    restoreConfig();
+  </script>
+</body>
+</html>

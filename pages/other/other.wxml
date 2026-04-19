@@ -1,0 +1,155 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="back-btn" bindtap="goBack">
+      <icon type="back" size="14" color="#333" />
+      <text>返回</text>
+    </view>
+    <view class="title-container">
+      <text class="page-title">更多功能</text>
+    </view>
+    <view class="placeholder"></view>
+  </view>
+
+  <!-- 功能卡片区域 -->
+  <view class="function-cards">
+    <view class="function-card" bindtap="goToUploadOutfit">
+      <view class="card-icon">
+        <image src="/images/穿搭.png" mode="aspectFit" />
+      </view>
+      <view class="card-content">
+        <text class="card-title">上传搭配</text>
+        <text class="card-desc">分享你的时尚搭配，获得更多灵感</text>
+      </view>
+      <view class="card-arrow">
+        <icon type="arrow" size="12" color="#999" />
+      </view>
+    </view>
+
+    <view class="function-card" bindtap="goToAbout">
+      <view class="card-icon">
+        <image src="/images/关于我们.png" mode="aspectFit" />
+      </view>
+      <view class="card-content">
+        <text class="card-title">关于我们</text>
+        <text class="card-desc">了解更多关于AI穿搭助手的信息</text>
+      </view>
+      <view class="card-arrow">
+        <icon type="arrow" size="12" color="#999" />
+      </view>
+    </view>
+
+    <view class="function-card" bindtap="goToSettings">
+      <view class="card-icon">
+        <image src="/images/用户.png" mode="aspectFit" />
+      </view>
+      <view class="card-content">
+        <text class="card-title">设置</text>
+        <text class="card-desc">个性化设置和偏好配置</text>
+      </view>
+      <view class="card-arrow">
+        <icon type="arrow" size="12" color="#999" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户互动区域 -->
+  <view class="interaction-section">
+    <view class="section-header">
+      <text class="section-title">用户互动</text>
+      <text class="section-subtitle">您的反馈对我们很重要</text>
+    </view>
+
+    <!-- 点赞和评级区域 -->
+    <view class="like-rating-container">
+      <view class="like-container">
+        <view class="like-btn {{hasLiked ? 'liked' : ''}}" bindtap="likeApp">
+          <image class="like-icon" src="{{hasLiked ? '/images/点赞.png' : '/images/评级灰色.png'}}" mode="aspectFit"></image>
+          <text class="like-text">{{hasLiked ? '已点赞' : '点赞'}}</text>
+        </view>
+        <text class="like-count">{{likes}} 人已点赞</text>
+      </view>
+
+      <view class="rating-container">
+        <text class="rating-title">给我们评分：</text>
+        <view class="stars">
+          <image 
+            wx:for="{{5}}" 
+            wx:key="index"
+            class="star {{rating >= index + 1 ? 'active' : 'inactive'}}" 
+            src="/images/评级.png" 
+            mode="aspectFit" 
+            data-index="{{index + 1}}" 
+            bindtap="setRating"
+          ></image>
+        </view>
+        <text class="rating-text">{{rating > 0 ? '感谢您的' + rating + '星评价！' : '请点击星星进行评价'}}</text>
+        <view class="average-rating" wx:if="{{averageRating > 0}}">
+          <text class="average-score-label">平均评分：</text>
+          <text class="average-score">{{averageRating}}分</text>
+          <text class="rating-count">({{ratingCount}}人已评价)</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 评论区域 -->
+  <view class="comments-section">
+    <view class="section-header">
+      <text class="section-title">用户评论</text>
+      <text class="section-subtitle">分享你的使用体验</text>
+    </view>
+
+    <!-- 评论输入 -->
+    <view class="comment-input-container">
+      <view class="comment-input" style="display: flex; align-items: center; width: 100%;">
+        <image class="avatar" src="{{userAvatar}}" mode="aspectFit" style="margin-right: 20rpx;"></image>
+        <input style="height: 70rpx; width: 314rpx; display: block; box-sizing: border-box" 
+          type="text" 
+          placeholder="写下你的评论..." 
+          bindinput="onCommentInput" 
+          value="{{newComment}}" 
+          maxlength="200"
+          class="comment-text-input"
+        />
+        <button class="submit-btn" bindtap="submitComment" disabled="{{submitting}}" style="width: 195rpx; height: 70rpx; margin-left: 20rpx; display: block; box-sizing: border-box; left: 6rpx; top: 6rpx; position: relative">
+          {{submitting ? '发送中...' : '发送'}}
+        </button>
+      </view>
+      <view class="comment-counter">
+        <text class="counter-text">{{newComment.length}}/200</text>
+      </view>
+    </view>
+
+    <!-- 评论列表 -->
+    <view class="comments-list">
+      <view wx:if="{{comments.length === 0}}" class="empty-comments">
+        <image src="/images/关于我们.png" mode="aspectFit" class="empty-icon"></image>
+        <text class="empty-text">暂无评论，快来发表第一条评论吧！</text>
+      </view>
+      
+      <block wx:for="{{comments}}" wx:key="id">
+        <view class="comment-item">
+          <image class="comment-avatar" src="{{item.avatar}}" mode="aspectFit"></image>
+          <view class="comment-content">
+            <view class="comment-header">
+              <text class="comment-user">{{item.user}}</text>
+              <text class="comment-time">{{item.time}}</text>
+            </view>
+            <text class="comment-text">{{item.content}}</text>
+            <view class="comment-footer">
+              <view class="comment-like-btn" bindtap="likeComment" data-id="{{item.id}}">
+                <image 
+                  src="{{item.hasLiked ? '/images/点赞.png' : '/images/评级灰色.png'}}" 
+                  mode="aspectFit" 
+                  class="like-small-icon"
+                ></image>
+                <text class="comment-like-count {{item.hasLiked ? 'liked' : ''}}">{{item.likes}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

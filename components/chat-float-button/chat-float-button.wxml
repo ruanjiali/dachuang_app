@@ -1,0 +1,13 @@
+<view 
+  class="chat-float-button"
+  style="{{buttonStyle}}"
+  bindtouchstart="touchStart"
+  bindtouchmove="touchMove"
+  bindtouchend="touchEnd">
+  <view class="chat-float-button-icon">
+    <!-- 默认图标 -->
+    <text wx:if="{{!icon}}" class="icon-text">AI</text>
+    <!-- 自定义图标 -->
+    <image wx:else src="{{icon}}" mode="aspectFit"></image>
+  </view>
+</view>

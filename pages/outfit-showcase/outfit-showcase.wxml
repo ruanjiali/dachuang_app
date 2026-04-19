@@ -1,0 +1,50 @@
+<view class="container">
+  <view class="header">
+    <text class="title">我的搭配</text>
+    <text class="subtitle">展示你的时尚穿搭</text>
+  </view>
+
+  <view class="content-section">
+    <view wx:if="{{outfitList.length === 0}}" class="empty-state">
+      <image class="empty-icon" src="/images/穿搭.png" mode="aspectFit"></image>
+      <text class="empty-title">暂无搭配作品</text>
+      <button class="upload-btn" bindtap="goToUpload">上传搭配</button>
+    </view>
+
+    <view wx:else>
+      <!-- 顶部操作栏 -->
+      <view class="action-bar">
+        <text class="outfit-count">共 {{outfitList.length}} 个搭配</text>
+        <button class="upload-btn-sm" bindtap="goToUpload">+ 添加搭配</button>
+      </view>
+
+      <view class="outfit-list">
+        <view 
+          wx:for="{{outfitList}}" 
+          wx:key="id" 
+          class="outfit-card"
+        >
+          <!-- 图片区域 -->
+          <view class="card-image-wrap" bindtap="viewOutfitDetail" data-item="{{item}}" data-index="{{index}}">
+            <image class="main-image" src="{{item.images[0]}}" mode="aspectFill"></image>
+            <!-- 删除按钮 -->
+            <view class="delete-btn" catchtap="deleteOutfit" data-index="{{index}}">
+              <text class="delete-icon">✕</text>
+            </view>
+          </view>
+          <!-- 信息区域 -->
+          <view class="outfit-info">
+            <text class="outfit-description">{{item.description}}</text>
+            <view class="outfit-meta">
+              <text class="outfit-time">{{item.time}}</text>
+              <view class="like-area">
+                <text class="like-icon">❤</text>
+                <text class="like-count">{{item.likes || 0}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
